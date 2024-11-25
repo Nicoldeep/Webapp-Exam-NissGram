@@ -1,17 +1,23 @@
-@model IEnumerable<Post>
+@model IEnumerable<NissGram.Models.Post>
+
+<head>
+    <link rel="stylesheet" href="~/css/postCard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
 
 <div class="row">
     @foreach (var post in Model)
     {
-            <div class="col-md-8 offset-md-2 mb-4">
+        <div class="col-md-8 offset-md-2 mb-4">
             @if (!string.IsNullOrEmpty(post.ImgUrl))
             {
-                       <partial name="_PostWithImage" model="post" />
+                <partial name="_PostWithImage" model="post" />
             }
             else
             {
-                        <partial name="_PostNote" model="post" />
+                <partial name="_PostNote" model="post" />
             }
-            </div>
+            <partial name="_PostPopup" model="post" />
+        </div>
     }
 </div>

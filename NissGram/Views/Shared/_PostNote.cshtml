@@ -1,7 +1,7 @@
 @model NissGram.Models.Post
 
 <head>
-    <link rel="stylesheet" href="~/css/postCard.css"/>
+    <link rel="stylesheet" href="~/css/postCard.css" />
 </head>
 
 <div class="card mb-4 mx-auto" style="max-width: 600px;">
@@ -11,13 +11,18 @@
             var profilePicture = Model.User.ProfilePicture ?? "/images/default-profile.png";
         }
 
-        <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile" style="color: inherit; text-decoration: none;"><div class="d-flex align-items-center mb-3">
-            <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle" style="width: 30px; height: 30px;">
-            <h5 class="card-title mb-0" style="margin-left: 10px;">@Model.User.UserName</h5>
-        </div></a>
+        <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
+            style="color: inherit; text-decoration: none;">
+            <div class="d-flex align-items-center mb-3">
+                <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle"
+                    style="width: 30px; height: 30px;">
+                <h5 class="card-title mb-0" style="margin-left: 10px;">@Model.User.UserName</h5>
+            </div>
+        </a>
         <p class="card-text font-italic">Note: @Model.Text</p>
 
-        <p class="text-muted"><hr>
+        <p class="text-muted">
+            <hr>
             <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
             <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
         </p>
@@ -26,7 +31,7 @@
                 <img src="~/images/heart.png" alt="Like Icon" class="like_img">
                 <span style="margin-left: 5px;">@Model.UserLikes.Count</span>
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#postModal-@Model.PostId">
                 <img src="~/images/chat.png" alt="Comment Icon" class="comment_img">
                 <span style="margin-left: 5px;">@Model.UserComments.Count</span>
             </div>
