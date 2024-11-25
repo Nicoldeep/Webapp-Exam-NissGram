@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<User?> GetUserByIdAsync(int id)
+    public async Task<User?> GetUserByIdAsync(string id)
     {
         try
         {

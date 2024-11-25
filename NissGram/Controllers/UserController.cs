@@ -5,57 +5,57 @@ using NissGram.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NissGram.Controllers;
 public class UserController : Controller
 {
-    private readonly NissDbContext _context;
+    private readonly IUserRepository _userRepository;
+    private readonly ILogger<UserController> _logger;
 
-    public UserController(NissDbContext context)
+
+    public UserController(IUserRepository userRepository, ILogger<UserController> logger)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _logger = logger;
     }
 
     // GET: /Users
     public async Task<IActionResult> GetAllUsers()
     {
         // Fetch all users from the database
-        var users = await _context.Users.ToListAsync();
+        var users = await _userRepository.GetAllUsersAsync();
 
         // Create an instance of UsersViewModel with the list of users
         var viewModel = new UsersViewModel(users, "All users");
-    
+
 
         // Pass the ViewModel to the view
         return View(viewModel);
     }
 
+
     [HttpGet]
     public async Task<IActionResult> Profile()
     {
-        var currentUser = await _context.Users
-            .Include(u => u.Posts)
-            .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(currentUserId))
+        {
+            return Unauthorized("User not authenticated.");
+        }
 
+        var name = User.Identity.Name;
+
+        var currentUser = await _userRepository.GetUserByIdAsync(currentUserId);
         if (currentUser == null)
         {
             return NotFound("User not found.");
         }
 
-        
-        var pictures = currentUser.Posts?.Where(p => p.ImgUrl != null).ToList() ?? new List<Post>();
-        var notes = currentUser.Posts?.Where(p => p.ImgUrl == null).ToList() ?? new List<Post>();
+        var userProfileViewModel = new UserProfileViewModel(currentUser);
 
-        var userProfileViewModel = new UserProfileViewModel
-        {
-            User = currentUser,
-            PictureCount = pictures.Count,
-            NoteCount = notes.Count,
-            Pictures = pictures,
-            Notes = notes
-        };
-
-        return View("~/Views/Shared/_Profile.cshtml", userProfileViewModel);
+        return View(userProfileViewModel);
     }
 
     [HttpGet]
@@ -109,7 +109,7 @@ public class UserController : Controller
             return View(model); // Redisplay the form with an error
         }
 
-        
+
         // Handle profile picture logic
         if (Request.Form["deleteProfilePicture"] == "true")
         {
@@ -143,7 +143,7 @@ public class UserController : Controller
         currentUser.LastName = model.LastName;
         currentUser.Email = model.Email;
         currentUser.PhoneNumber = model.PhoneNumber;
-        
+
 
         // Save changes to the database
         _context.Users.Update(currentUser);
@@ -161,30 +161,8 @@ public class UserController : Controller
 
         // Redirect back to the profile page
         return RedirectToAction(nameof(Profile));
-        
+
     }
-
-
-
-
-   /* //GET: /Users/Details/5
-    [HttpGet]
-    public async Task<IActionResult> GetProfile(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        // Fetch user by ID
-        var user = await _context.Users.FindAsync(id);
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        return View(user);
-    }*/
 
     [HttpGet]
     public async Task<IActionResult> DeleteProfilePicture()
@@ -208,7 +186,7 @@ public class UserController : Controller
             }
 
             // Remove the profile picture from the database
-             currentUser.ProfilePicture = "/images/profile_image_default.png";
+            currentUser.ProfilePicture = "/images/profile_image_default.png";
             _context.Users.Update(currentUser);
             await _context.SaveChangesAsync();
         }
@@ -226,7 +204,7 @@ public class UserController : Controller
         var user = await _context.Users
             .Include(u => u.Posts)
             .FirstOrDefaultAsync(u => u.UserName == username);
-            
+
 
         if (user == null)
         {

@@ -10,10 +10,12 @@ namespace NissGram.Controllers;
 public class PostController : Controller
 {
     private readonly IPostRepository _postRepository;
+    private readonly IUserRepository _userRepository;
     private readonly ILogger<PostController> _logger;
 
-    public PostController(IPostRepository postRepository, ILogger<PostController> logger)
+    public PostController(IPostRepository postRepository, IUserRepository userRepository, ILogger<PostController> logger)
     {
+        _userRepository = userRepository;
         _postRepository = postRepository;
         _logger = logger;
     }
@@ -40,54 +42,53 @@ public class PostController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(Post post, IFormFile? uploadImage)
     {
+        // Retrieve the current user's ID from claims
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId))
+        {
+            ModelState.AddModelError("", "User not authenticated.");
+            return View(post);
+        }
 
-        // MIDLERTIDIG FØR INNLOGGING ER PÅ PLASS
-        ModelState.Remove("User");
+        // Fetch the current user from the database
+        var user = await _userRepository.GetUserByIdAsync(userId);
+        if (user == null)
+        {
+            ModelState.AddModelError("", "User not found.");
+            return View(post);
+        }
 
-        post.User = await _postRepository.TempGetRandUser();
-     
+        // Handle image upload if provided
         if (uploadImage != null && uploadImage.Length > 0)
         {
-            // Generate a unique file name and path
             var fileName = Guid.NewGuid() + Path.GetExtension(uploadImage.FileName);
             var filePath = Path.Combine("wwwroot/images", fileName);
 
-            // Save the file to wwwroot/images
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await uploadImage.CopyToAsync(stream);
             }
 
-            // Set the ImgUrl to the relative path for the database
             post.ImgUrl = "/images/" + fileName;
         }
 
+        // Associate the post with the current user
+        post.User = user;
         post.DateCreated = DateTime.Now;
         post.DateUpdated = DateTime.Now;
 
-
         if (ModelState.IsValid)
         {
-            bool ok = await _postRepository.CreatePostAsync(post);
-            if (ok)
+            bool success = await _postRepository.CreatePostAsync(post);
+            if (success)
             {
                 return RedirectToAction(nameof(Index));
             }
+            ModelState.AddModelError("", "Failed to create the post.");
         }
-        else
-        {
-            foreach (var entry in ModelState)
-            {
-                foreach (var error in entry.Value.Errors)
-                {
-                    Console.WriteLine($"Key: {entry.Key}, Error: {error.ErrorMessage}");
-                }
-            }
-            Console.WriteLine("Model state is invalid");
-        }
+
         return View(post);
     }
-
 
     // GET: Show the update form
     [HttpGet]

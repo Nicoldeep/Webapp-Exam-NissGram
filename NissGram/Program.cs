@@ -42,7 +42,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 //POlicy som krever autentisering for å få tilgang til noen av sidene
- builder.Services.AddControllersWithViews(config =>
+builder.Services.AddControllersWithViews(config =>
 {
     // Requires users to be authenticated globally
     var policy = new AuthorizationPolicyBuilder()
@@ -57,13 +57,14 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/Account/Login");
     options.Conventions.AllowAnonymousToPage("/Account/Logout");
     options.Conventions.AllowAnonymousToPage("/Account/Register");
-    
+
     // If your pages are under the Identity area:
     // options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Login");
     // options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Register");
 });
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddSingleton<IEmailSender, DummyEmailSender>();
 
