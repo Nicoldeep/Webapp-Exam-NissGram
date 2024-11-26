@@ -35,9 +35,8 @@
                             <img src="~/images/chat.png" alt="Comment Icon" class="comment_img comment_img_popup">
                             <span style="margin-left: 5px;">@Model.UserComments.Count Comments</span>
                         </div>
-                        <div class="text-muted postedDateModal">
-                            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
-                            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
+                        <div class="postedDateModal">
+                            <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
                         </div>
                     </div>
                 </div>
@@ -63,7 +62,7 @@
                                         <strong>@comment.User.UserName</strong>
                                     </div>
                                     <p>@comment.Text</p>
-                                    <small class="text-muted">@comment.dateCommented.ToString("MMMM dd, yyyy | HH:mm")</small>
+                                   <small class="text-muted">@comment.dateCommented.ToString("dd.MM.yy")</small>
                                 </li>
                             }
                         </ul>

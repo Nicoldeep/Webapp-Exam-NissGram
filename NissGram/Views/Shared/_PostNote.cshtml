@@ -20,8 +20,9 @@
         </a>
         <p class="card-text font-italic">Note: @Model.Text</p>
 
+        <hr>
         <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
-
+        
         <div class="d-flex align-items-center">
             <div class="d-flex align-items-center mr-3">
                 <form asp-controller="Post" asp-action="Like" method="post">
