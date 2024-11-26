@@ -3,15 +3,16 @@
 <div class="row">
     @foreach (var post in Model)
     {
-            <div class="col-md-8 offset-md-2 mb-4">
+        <div class="col-md-8 offset-md-2 mb-4" id="post-@post.PostId">
             @if (!string.IsNullOrEmpty(post.ImgUrl))
             {
-                       <partial name="_PostWithImage" model="post" />
+                <partial name="_PostWithImage" model="post" />
             }
             else
             {
-                        <partial name="_PostNote" model="post" />
+                <partial name="_PostNote" model="post" />
             }
-            </div>
+            <partial name="_PostPopup" model="post" />
+        </div>
     }
 </div>

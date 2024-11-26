@@ -1,0 +1,87 @@
+@model NissGram.Models.Post
+
+<div class="modal fade" id="postModal-@Model.PostId" tabindex="-1" aria-labelledby="postModalLabel-@Model.PostId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
+                    style="color: inherit; text-decoration: none;">
+                    <div class="d-flex align-items-center">
+                        <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle"
+                            style="width: 40px; height: 40px; margin-right: 10px;">
+                        <h5 class="modal-title mb-0" id="postModalLabel-@Model.PostId">@Model.User.UserName</h5>
+                    </div>
+                </a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body d-flex">
+                <div class="left pe-3">
+                    @if (!string.IsNullOrEmpty(Model.ImgUrl))
+                    {
+                        <img src="@Model.ImgUrl" alt="Post Image" class="img-fluid rounded mb-3" />
+                    }
+                    else
+                    {
+                        <p class="font-italic">@Model.Text</p>
+                    }
+                    <div class="likes-comments-dates">
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/heart.png" alt="Like Icon" class="like_img">
+                            <span style="margin-left: 5px;">@Model.UserLikes.Count Likes</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/chat.png" alt="Comment Icon" class="comment_img comment_img_popup">
+                            <span style="margin-left: 5px;">@Model.UserComments.Count Comments</span>
+                        </div>
+                        <div class="text-muted postedDateModal">
+                            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
+                            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    @if (!string.IsNullOrEmpty(Model.ImgUrl))
+                    {
+                        <h5 class="mb-3"> @Model.Text</h5>
+                    }
+                    else
+                    {
+                        <h5 class="mb-3"> Note </h5>
+                    }
+                    <h6>Comments</h6>
+                    @if (Model.UserComments != null && Model.UserComments.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var comment in Model.UserComments)
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="@comment.User.ProfilePicture" alt="Comment User Picture"
+                                            class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+                                        <strong>@comment.User.UserName</strong>
+                                    </div>
+                                    <p>@comment.Text</p>
+                                    <small class="text-muted">@comment.dateCommented.ToString("MMMM dd, yyyy | HH:mm")</small>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No comments yet. Be the first to comment!</p>
+                    }
+                    <form asp-action="AddComment" method="post">
+                        <input type="hidden" name="PostId" value="@Model.PostId" />
+                        <div class="input-group mt-3">
+                            <input type="text" class="form-control" name="Text" placeholder="Write a comment..."
+                                required />
+                            <button class="btn btn-primary" type="submit">Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

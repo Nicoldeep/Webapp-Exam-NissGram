@@ -21,20 +21,20 @@
                         +
                     </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li>
-                        <button type="button" id="uploadProfilePictureButton" class="dropdown-item">Upload Profile Picture</button>
-                    </li>
-                    <li>
-                        @if (Model.ProfilePicture != "/images/profile_image_default.png")
-                        {
-                            <a asp-action="DeleteProfilePicture" asp-controller="User" class="dropdown-item text-danger">Delete Picture</a>
-                        }
-                        else
-                        {
-                            <a class="dropdown-item text-danger disabled">Delete Picture</a>
-                        }
-                    </li>
-                </ul>
+                <li>
+                    <button type="button" id="uploadProfilePictureButton" class="dropdown-item">Upload Profile Picture</button>
+                </li>
+                <li>
+                    @if (Model.ProfilePicture != "../../wwwwroot/images/profile_image_default.png")
+                            {
+                                <!-- Call the DeleteProfilePicture method in the controller -->
+                                <a asp-action="DeleteProfilePicture" asp-controller="User" class="dropdown-item text-danger">
+                                    Delete Picture
+                                </a>
+                            }
+
+                </li>
+            </ul>
 
                 </div>
             </div>

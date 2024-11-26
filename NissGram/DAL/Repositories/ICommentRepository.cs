@@ -1,13 +1,12 @@
 using NissGram.Models;
 
-namespace NissGram.DAL;
-public interface ICommentRepository
+namespace NissGram.DAL
 {
-    Task<IEnumerable<Comment>?> GetAllComments(Post post);
-
-    //Task<UserPostLike?> GetLikeByUserAndPostAsync(int userId, int postId); 
-    Task<bool> CreateComment(Comment comment);
-    Task<bool> UpdateComment(Comment comment);
-    Task<bool> DeleteComment(int id);
+    public interface ICommentRepository
+    {
+        Task<IEnumerable<Comment>> GetCommentsByPostIdAsync(int postId);
+        Task<Comment?> GetCommentByIdAsync(int commentId);
+        Task<bool> AddCommentAsync(Comment comment);
+        Task<bool> DeleteCommentAsync(int commentId);
+    }
 }
-

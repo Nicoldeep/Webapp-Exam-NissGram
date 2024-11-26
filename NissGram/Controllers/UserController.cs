@@ -3,6 +3,7 @@ using NissGram.Models;
 using NissGram.ViewModels;
 using NissGram.DAL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace NissGram.Controllers;
 
@@ -36,6 +37,13 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> Profile()
     {
+
+        // Check if User.Identity or User.Identity.Name is null
+        if (User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
+        {
+            return Unauthorized("User is not authenticated.");
+        }
+
         var currentUser = await _userRepository.GetUserByUsernameAsync(User.Identity.Name);
 
         if (currentUser == null)
@@ -43,29 +51,25 @@ public class UserController : Controller
             return NotFound("User not found.");
         }
 
-         /*if (string.IsNullOrEmpty(currentUser.ProfilePicture))
-        {
-            currentUser.ProfilePicture = "/images/profile_image_default.png"; // Ensure default picture
-        }*/
+        /*if (string.IsNullOrEmpty(currentUser.ProfilePicture))
+       {
+           currentUser.ProfilePicture = "/images/profile_image_default.png"; // Ensure default picture
+       }*/
 
-        var pictures = currentUser.Posts?.Where(p => p.ImgUrl != null).ToList() ?? new List<Post>();
-        var notes = currentUser.Posts?.Where(p => p.ImgUrl == null).ToList() ?? new List<Post>();
+        var userProfileViewModel = new UserProfileViewModel(currentUser);
 
-        var userProfileViewModel = new UserProfileViewModel
-        {
-            User = currentUser,
-            PictureCount = pictures.Count,
-            NoteCount = notes.Count,
-            Pictures = pictures,
-            Notes = notes
-        };
-
-        return View("~/Views/Shared/_Profile.cshtml", userProfileViewModel);
+        return View(userProfileViewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> UserUpdateCreate()
     {
+        // Check if User.Identity or User.Identity.Name is null
+        if (User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
+        {
+            return Unauthorized("User is not authenticated.");
+        }
+
         var currentUser = await _userRepository.GetUserByUsernameAsync(User.Identity.Name);
 
         if (currentUser == null)
@@ -186,17 +190,7 @@ public class UserController : Controller
             return NotFound("User not found.");
         }
 
-        var pictures = user.Posts?.Where(p => p.ImgUrl != null).ToList() ?? new List<Post>();
-        var notes = user.Posts?.Where(p => p.ImgUrl == null).ToList() ?? new List<Post>();
-
-        var userProfileViewModel = new UserProfileViewModel
-        {
-            User = user,
-            PictureCount = pictures.Count,
-            NoteCount = notes.Count,
-            Pictures = pictures,
-            Notes = notes
-        };
+        var userProfileViewModel = new UserProfileViewModel(user);
 
         return View(userProfileViewModel);
     }

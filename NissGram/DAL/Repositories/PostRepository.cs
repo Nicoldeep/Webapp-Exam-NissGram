@@ -1,4 +1,3 @@
-using System.Numerics;
 using Microsoft.EntityFrameworkCore;
 using NissGram.Models;
 
@@ -26,8 +25,9 @@ public class PostRepository : IPostRepository
     {
         try
         {
-            var posts = await _db.Posts.ToListAsync();
-            Console.WriteLine("Count:" + posts.Count);
+            var posts = await _db.Posts
+                .OrderByDescending(post => post.DateCreated) // Ensure this property exists
+                .ToListAsync();
             return posts;
         }
         catch (Exception e)
@@ -36,6 +36,7 @@ public class PostRepository : IPostRepository
             return null;
         }
     }
+
 
     // Get All Posts by User
     public async Task<IEnumerable<Post>?> GetAllPostsAsync(User user)
@@ -70,15 +71,17 @@ public class PostRepository : IPostRepository
     public async Task<User?> TempGetRandUser()
     {
         return await _db.Users.OrderBy(u => u.Id).FirstOrDefaultAsync();
-    
+
     }
     // CREATE
     public async Task<bool> CreatePostAsync(Post post)
     {
         try
         {
+
             _db.Posts.Add(post);
             await _db.SaveChangesAsync();
+            Console.WriteLine("Post created");
             return true;
         }
         catch (Exception e)

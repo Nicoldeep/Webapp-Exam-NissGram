@@ -2,6 +2,22 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    string sectionId = ViewContext.HttpContext.Request.Query["section"];
 }
 
-<partial name="_AllPosts" model="@Model.Posts" />
+<div id="all-posts">
+    @if (!string.IsNullOrEmpty(sectionId))
+    {
+        <script>
+            // Scroll to the specific section after the page loads
+            document.addEventListener('DOMContentLoaded', function () {
+                var target = document.getElementById('@sectionId');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        </script>
+    }
+
+    <partial name="_AllPosts" model="@Model.Posts" />
+</div>

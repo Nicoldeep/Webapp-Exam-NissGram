@@ -26,11 +26,11 @@ document.getElementById('uploadProfilePictureButton').addEventListener('click', 
 document.getElementById('uploadProfilePicture').addEventListener('change', previewProfileImage);*/
 
 // Preview uploaded profile picture
-// Preview uploaded profile picture
 function previewProfileImage(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
     const preview = document.getElementById('profileImagePreview');
+    const deleteButton = document.getElementById('deleteProfilePictureButton');
 
     if (file) {
         reader.onload = function (e) {
@@ -39,7 +39,7 @@ function previewProfileImage(event) {
                                   style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />`;
 
             // Enable the delete button
-            document.getElementById('deleteProfilePictureButton').disabled = false;
+            deleteButton.disabled = false;
         };
         reader.readAsDataURL(file);
     }
@@ -53,33 +53,23 @@ document.getElementById('uploadProfilePictureButton').addEventListener('click', 
 // Attach change event to the file input
 document.getElementById('uploadProfilePicture').addEventListener('change', previewProfileImage);
 
-// Handle delete button functionality
+{// Handle delete button functionality
 document.getElementById('deleteProfilePictureButton').addEventListener('click', function () {
     const preview = document.getElementById('profileImagePreview');
+    const deleteButton = document.getElementById('deleteProfilePictureButton');
+    const fileInput = document.getElementById('uploadProfilePicture');
 
-    // Clear the preview
-    preview.innerHTML = '<span class="text-muted" style="font-size: 14px;">No Image</span>';
-
-    // Disable the delete button
-    this.disabled = true;
-
-    // Clear the file input
-    document.getElementById('uploadProfilePicture').value = '';
-});
-
-document.getElementById('deleteProfilePictureButton').addEventListener('click', function () {
-    const preview = document.getElementById('profileImagePreview');
-
-    // Clear the preview
+    // Set the preview to the default picture
     preview.innerHTML = '<img src="/images/profile_image_default.png" alt="Default Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />';
 
-    // Set the hidden input to "true"
-    document.getElementById('deleteProfilePicture').value = "true";
-
     // Disable the delete button
-     //this.disabled = true;
+    deleteButton.disabled = true;
 
     // Clear the file input
-    document.getElementById('uploadProfilePicture').value = '';
-});
+    fileInput.value = '';
+
+    // Set a hidden field or form value to indicate the default picture is being used
+    document.getElementById('deleteProfilePicture').value = 'true';
+});}
+
 

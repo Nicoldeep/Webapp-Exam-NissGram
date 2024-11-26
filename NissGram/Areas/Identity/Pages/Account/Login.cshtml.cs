@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NissGram.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NissGram.Areas.Identity.Pages.Account
 {
@@ -22,11 +23,14 @@ namespace NissGram.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<User> signInManager, UserManager<User> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -67,8 +71,8 @@ namespace NissGram.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Display(Name = "Username or Email")]
+            public string UsernameOrEmail { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -111,9 +115,35 @@ namespace NissGram.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                User user;
+
+                // Check if input is an email or username
+                if (Input.UsernameOrEmail.Contains("@")) // Check if input is likely an email
+                {
+                    user = await _userManager.Users
+                        .FirstOrDefaultAsync(u => u.Email == Input.UsernameOrEmail);
+
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt. Email not found.");
+                        return Page();
+                    }
+                }
+                else // Treat input as a username
+                {
+                    user = await _userManager.FindByNameAsync(Input.UsernameOrEmail);
+
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt. Username not found.");
+                        return Page();
+                    }
+                }
+
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

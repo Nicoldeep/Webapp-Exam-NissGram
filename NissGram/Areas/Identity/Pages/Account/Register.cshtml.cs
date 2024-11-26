@@ -127,8 +127,6 @@ namespace NissGram.Areas.Identity.Pages.Account
         }
 
 
-        
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -169,7 +167,6 @@ namespace NissGram.Areas.Identity.Pages.Account
             
             if (ModelState.IsValid)
             {
-
                  var user = new User
                 {
                     ProfilePicture = Input.ProfilePicture, // Save the profile picture path

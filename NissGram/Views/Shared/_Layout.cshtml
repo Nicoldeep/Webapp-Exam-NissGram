@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿﻿@using Microsoft.AspNetCore.Identity
 @using NissGram.Models
 @inject UserManager<User> UserManager
 @inject SignInManager<User> SignInManager
@@ -11,11 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NissGram</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/postCard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NissGram.styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.5/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
 
 </head>
 
@@ -25,7 +27,7 @@
         <a asp-controller="Home" asp-action="Index" class="navbar-brand">
             <img src="~/images/Niss.png" alt="NissGram Logo" style="height: 70px; padding: 5px;">
         </a>
-        
+
         @if (SignInManager.IsSignedIn(User))
         {
             // Hent den innloggede brukeren
@@ -44,7 +46,8 @@
                 <a asp-controller="Post" asp-action="Create">
                     <img src="/images/addIcon.png" style="height: 40px; padding: 5px;" alt="Add Post Icon">
                 </a>
-                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post" class="d-inline">
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login"
+                    method="post" class="d-inline">
                     <button type="submit" class="nav-link text-white p-0 border-0 bg-transparent">
                         <img src="/images/logoutIcon.png" style="height: 40px; padding: 5px;" alt="Logout Icon">
                     </button>
@@ -80,9 +83,11 @@
                         </a>
                     </li>
                 </ul>
-                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post" class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login"
+                    method="post" class="d-flex align-items-center justify-content-center" style="height: 100%;">
                     <button type="submit" class="nav-link text-white p-0 border-0 bg-transparent">
-                        <img src="/images/logoutIcon.png" alt="Logout Icon" style="height: 40px; width: 40px; margin: 15px;;">
+                        <img src="/images/logoutIcon.png" alt="Logout Icon"
+                            style="height: 40px; width: 40px; margin: 15px;;">
                     </button>
                 </form>
             </nav>
@@ -97,7 +102,8 @@
         </div>
     </div>
 
-    <footer class="border-top footer text-muted @((ViewData["Title"]?.ToString() == "Log in" || ViewData["Title"]?.ToString() == "Register") ? "full-width-footer" : "")">
+    <footer
+        class="border-top footer text-muted @((ViewData["Title"]?.ToString() == "Log in" || ViewData["Title"]?.ToString() == "Register") ? "full-width-footer" : "")">
         <div class="container">
             &copy; 2024 - NissGram - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
