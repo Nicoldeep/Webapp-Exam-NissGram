@@ -14,8 +14,17 @@ namespace NissGram.ViewModels
         public UserProfileViewModel(User user)
         {
             User = user;
-            Pictures = user.Posts?.Where(p => !string.IsNullOrEmpty(p.ImgUrl)).ToList() ?? new List<Post>();
-            Notes = user.Posts?.Where(p => string.IsNullOrEmpty(p.ImgUrl)).ToList() ?? new List<Post>();
+            //Sort Pictures by DateCreated descending
+            Pictures = user.Posts?
+                .Where(p => !string.IsNullOrEmpty(p.ImgUrl))
+                .OrderByDescending(p => p.DateCreated) // Sort descending
+                .ToList() ?? new List<Post>();
+
+            // Sort Notes by DateCreated descending
+            Notes = user.Posts?
+                .Where(p => string.IsNullOrEmpty(p.ImgUrl))
+                .OrderByDescending(p => p.DateCreated) // Sort descending
+                .ToList() ?? new List<Post>();
             PictureCount = Pictures.Count;
             NoteCount = Notes.Count;
         }

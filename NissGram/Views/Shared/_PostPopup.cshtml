@@ -5,8 +5,8 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
-                    style="color: inherit; text-decoration: none;">
+                <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="@(Model.User.UserName == User.Identity.Name ? "Profile" : "ViewUserProfile")"
+                        style="color: inherit; text-decoration: none;">
                     <div class="d-flex align-items-center">
                         <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle"
                             style="width: 40px; height: 40px; margin-right: 10px;">
@@ -27,17 +27,9 @@
                         <p class="font-italic">@Model.Text</p>
                     }
                     <div class="likes-comments-dates">
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/heart.png" alt="Like Icon" class="like_img">
-                            <span style="margin-left: 5px;">@Model.UserLikes.Count Likes</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/chat.png" alt="Comment Icon" class="comment_img comment_img_popup">
-                            <span style="margin-left: 5px;">@Model.UserComments.Count Comments</span>
-                        </div>
-                        <div class="text-muted postedDateModal">
-                            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
-                            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
+                        <partial name="_PostActions" model="Model" />
+                        <div class="postedDateModal">
+                            <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
                         </div>
                     </div>
                 </div>
@@ -63,7 +55,7 @@
                                         <strong>@comment.User.UserName</strong>
                                     </div>
                                     <p>@comment.Text</p>
-                                    <small class="text-muted">@comment.dateCommented.ToString("MMMM dd, yyyy | HH:mm")</small>
+                                   <small class="text-muted">@comment.dateCommented.ToString("dd.MM.yy")</small>
                                 </li>
                             }
                         </ul>

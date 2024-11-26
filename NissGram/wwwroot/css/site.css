@@ -50,8 +50,8 @@ body {
 /* Profilbildet */
 .profile-picture {
   width: 100%; /* Tilpass bildet til containerens bredde */
-  height: auto; /* Behold proporsjonene */
-  object-fit: scale-down; /* Sørger for at bildet ikke blir kuttet */
+  height: 100%; /* Behold proporsjonene */
+  object-fit: fill; /* Sørger for at bildet ikke blir kuttet */
   border-radius: 50%; /* Gjør bildet rundt */
 }
 

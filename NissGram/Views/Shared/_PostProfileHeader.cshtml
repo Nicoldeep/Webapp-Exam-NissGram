@@ -1,0 +1,10 @@
+@model NissGram.Models.Post
+
+<a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="@(Model.User.UserName == User.Identity.Name ? "Profile" : "ViewUserProfile")"
+            style="color: inherit; text-decoration: none;">
+    <div class="d-flex align-items-center mb-3">
+            <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle"
+                style="width: 30px; height: 30px;">
+        <h5 class="card-title mb-0" style="margin-left: 10px;">@Model.User.UserName</h5>
+    </div>
+</a>

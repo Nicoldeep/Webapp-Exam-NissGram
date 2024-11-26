@@ -1,0 +1,25 @@
+@model NissGram.Models.Post
+
+<div class="d-flex align-items-center">
+    <!-- Like Section -->
+    <div class="d-flex align-items-center mr-3">
+        <form asp-controller="Post" asp-action="Like" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="postId" value="@Model.PostId" />
+            @{
+                var userLiked = Model.UserLikes.Any(like => like.User.UserName == User.Identity.Name);
+            }
+            <button type="submit" class="btn p-0" style="border: none;">
+                <img src="~/images/heart.png" alt="Like Icon" class="like-img me-2 @(userLiked ? "liked" : "")"
+                    style="margin-left: 5px; width: 25px; height: 24px;">
+            </button>
+            <span>@Model.UserLikes.Count</span>
+        </form>
+    </div>
+
+    <!-- Comment Section -->
+    <div class="d-flex align-items-center mr-3" data-bs-toggle="modal" data-bs-target="#postModal-@Model.PostId">
+        <img src="~/images/chat.png" alt="Comment Icon" class="comment_img">
+        <span style="margin-left: 5px; width: 25px; height: 24px;">@Model.UserComments.Count</span>
+    </div>
+</div>

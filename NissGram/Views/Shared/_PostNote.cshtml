@@ -6,46 +6,20 @@
 
 <div class="card mb-4 mx-auto" style="max-width: 600px;">
     <div class="card-body">
-        @* Check if there are any profile image registered, if not show default image *@
-        @{
-            var profilePicture = Model.User.ProfilePicture ?? "/images/default-profile.png";
-        }
-        <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
-            style="color: inherit; text-decoration: none;">
-            <div class="d-flex align-items-center mb-3">
-                <img src="@Model.User.ProfilePicture" alt="Profile Picture" class="rounded-circle"
-                    style="width: 30px; height: 30px;">
-                <h5 class="card-title mb-0" style="margin-left: 10px;">@Model.User.UserName</h5>
-            </div>
-        </a>
+        <!-- User Profile Header -->
+        <partial name="_PostProfileHeader" model="Model" />
+
+        <!-- Text Content -->
         <p class="card-text font-italic">Note: @Model.Text</p>
+        
+        <!-- Post Dates -->
+        <hr>
+        <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
+        
+        <!-- Post Actions -->
+        <partial name="_PostActions" model="Model" />
 
-        <p class="text-muted">
-            <hr>
-            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
-            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
-        </p>
-
-        <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center mr-3">
-                <form asp-controller="Post" asp-action="Like" method="post">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="postId" value="@Model.PostId" />
-                    @{
-                        var userLiked = Model.UserLikes.Any(like => like.User.UserName == User.Identity.Name);
-                    }
-                    <button type="submit" class="btn btn-light p-0" style="border: none;">
-                        <img src="~/images/heart.png" alt="Like Icon" class="like-img me-2 @(userLiked ? "liked" : "")"
-                            style="margin-left: 5px; width: 20px; height: 20px;">
-                    </button>
-                    <span>@Model.UserLikes.Count</span>
-                </form>
-            </div>
-            <div class="d-flex align-items-center mr-3" data-bs-toggle="modal"
-                data-bs-target="#postModal-@Model.PostId">
-                <img src="~/images/chat.png" alt="Comment Icon" class="comment_img">
-                <span style="margin-left: 5px; width: 20px; height: 20px;">@Model.UserComments.Count</span>
-            </div>
-        </div>
+        <!-- Popup Modal  -->
+        <partial name="_PostPopup" model="Model" />
     </div>
 </div>

@@ -8,8 +8,6 @@
     transform: scale(1.1);
     content: url('/images/heart-red.png')
 }
-  
-
 .comment_img {
     vertical-align: middle;
     margin-left: 15px;
@@ -74,7 +72,7 @@ small {
 }
 
 /* Responsiv styling for små skjermer */
-@media (max-width: 1050px) {
+@media (max-width: 900px) {
     .likes-comments-dates {
         flex-direction:row; 
         align-items: flex-start; 

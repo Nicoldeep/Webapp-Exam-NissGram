@@ -1,85 +1,101 @@
 @model NissGram.ViewModels.UserProfileViewModel
 
-    <!-- Static Section with Frame -->
-    <div class="profile-header-frame border rounded p-3 mb-4">
-        <div class="profile-header d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <!-- Profile Picture from Controller -->
-                <img src="@(Model.User.ProfilePicture ?? "/images/profile_image_default.png")" alt="Profile Picture"
-                    class="rounded-circle me-5" style="width: 100px; height: 100px;">
+<!-- Static Section with Frame -->
+<div class="profile-header-frame border rounded p-3 mb-4">
+    <div class="profile-header d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <!-- Profile Picture from Controller -->
+            <img src="@(Model.User.ProfilePicture ?? "/images/profile_image_default.png")" alt="Profile Picture"
+                class="rounded-circle me-5" style="width: 100px; height: 100px;">
 
-                <div>
-                    <!-- Username -->
-                    <h2 class="mb-4">@Model.User.UserName</h2>
-                    <!-- Picture Count and Note Count -->
-                    <p class="mb-4 fs-5">
-                        <span>@Model.PictureCount Pictures</span> |
-                        <span>@Model.NoteCount Notes</span>
-                    </p>
-                    <!-- Description/About -->
-                    <div class="fs-6" style="word-wrap: break-word; overflow-wrap: break-word;">
-                        <p class="mb-0" style="white-space: pre-wrap;">@Model.User.About</p>
-                    </div>
+            <div>
+                <!-- Username -->
+                <h2 class="mb-4">@Model.User.UserName</h2>
+                <!-- Picture Count and Note Count -->
+                <p class="mb-4 fs-5">
+                    <span>@Model.PictureCount Pictures</span> |
+                    <span>@Model.NoteCount Notes</span>
+                </p>
+                <!-- Description/About -->
+                <div class="fs-6" style="word-wrap: break-word; overflow-wrap: break-word;">
+                    <p class="mb-0" style="white-space: pre-wrap;">@Model.User.About</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Dropdown -->
-            <div class="dropdown burger-icon">
-                <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <!-- Burger Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" asp-controller="User" asp-action="UserUpdateCreate">Update</a></li>
-                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login"
-                        method="post" class="d-inline">
-                        <button type="submit" class="dropdown-item text-danger">
-                            Log Out
-                        </button>
-                    </form>
-                </ul>
-            </div>
+        <!-- Dropdown -->
+        <div class="dropdown burger-icon">
+            <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <!-- Burger Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                </svg>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" asp-controller="User" asp-action="UserUpdateCreate">Update</a></li>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login"
+                    method="post" class="d-inline">
+                    <button type="submit" class="dropdown-item text-danger">
+                        Log Out
+                    </button>
+                </form>
+            </ul>
         </div>
     </div>
+</div>
 
-    <!-- Buttons Section -->
-    <div class="profile-buttons d-flex justify-content-center my-4">
-        @{
-            var section = Context.Request.Query["section"].ToString();
-        }
-        <a asp-controller="User" asp-action="Profile" asp-route-section="Pictures"
-            class="btn btn-primary btn-lg mx-2 w-25 @(section == "Pictures" || string.IsNullOrEmpty(section) ? "btn-dark" : "")">
-            Pictures
-        </a>
-        <a asp-controller="User" asp-action="Profile" asp-route-section="Notes"
-            class="btn btn-primary btn-lg mx-2 w-25 @(section == "Notes" ? "btn-dark" : "")">
-            Notes
-        </a>
-        <a asp-controller="User" asp-action="Profile" asp-route-section="Archive"
-            class="btn btn-primary btn-lg mx-2 w-25 @(section == "Archive" ? "btn-dark" : "")">
-            Archive
-        </a>
-        <a asp-controller="User" asp-action="Profile" asp-route-section="Activity"
-            class="btn btn-primary btn-lg mx-2 w-25 @(section == "Activity" ? "btn-dark" : "")">
-            Activity
-        </a>
-    </div>
+<!-- Buttons Section -->
+<div class="profile-buttons d-flex justify-content-center my-4">
+    @{
+        var currentSection = Context.Request.Query["section"].ToString();
+    }
+    <a asp-controller="User" asp-action="Profile" asp-route-section="Pictures"
+       class="btn btn-primary btn-lg mx-2 w-25 @(currentSection == "Pictures" || string.IsNullOrEmpty(currentSection) ? "btn-dark" : "")">
+        Pictures
+    </a>
+    <a asp-controller="User" asp-action="Profile" asp-route-section="Notes"
+       class="btn btn-primary btn-lg mx-2 w-25 @(currentSection == "Notes" ? "btn-dark" : "")">
+        Notes
+    </a>
+    <a asp-controller="User" asp-action="Profile" asp-route-section="Archive"
+       class="btn btn-primary btn-lg mx-2 w-25 @(currentSection == "Archive" ? "btn-dark" : "")">
+        Archive
+    </a>
+    <a asp-controller="User" asp-action="Profile" asp-route-section="Activity"
+       class="btn btn-primary btn-lg mx-2 w-25 @(currentSection == "Activity" ? "btn-dark" : "")">
+        Activity
+    </a>
+</div>
 
-    <!-- Dynamic Content -->
-    <div class="dynamic-content mt-4">
-        @if (string.IsNullOrEmpty(Context.Request.Query["section"]))
+<!-- Dynamic Content Section -->
+<div class="dynamic-content mt-4">
+    @if (currentSection == "Pictures" || string.IsNullOrEmpty(currentSection))
+    {
+        @if (Model.Pictures != null && Model.Pictures.Any())
         {
             <h3>Pictures</h3>
-            <p>No pictures available yet.</p>
+            <partial name="_PicturesView" model="Model.Pictures" />
         }
         else
         {
-            <h3>@Context.Request.Query["section"]</h3>
+            <h3>Pictures</h3>
             <p>No content available for the selected section.</p>
         }
-    </div>
+    }
+    else if (currentSection == "Notes" || string.IsNullOrEmpty(currentSection))
+    {
+        @if (Model.Notes != null && Model.Notes.Any())
+        {
+            <h3>Notes</h3>
+            <partial name="_NotesView" model="Model.Notes" />
+        }
+        else
+        {
+            <h3>Notes</h3>
+            <p>No content available for the selected section.</p>
+        }
+    }
+</div>
