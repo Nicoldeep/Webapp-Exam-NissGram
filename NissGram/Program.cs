@@ -64,6 +64,7 @@ builder.Services.AddRazorPages(options =>
 });
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>(); // Register UserRepository
 
 builder.Services.AddSingleton<IEmailSender, DummyEmailSender>();
 
@@ -73,6 +74,8 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30); // 30 minutes
     //options.Cookie.IsEssential = true;
 });
+
+
 
 
 var loggerConfiguration = new LoggerConfiguration()

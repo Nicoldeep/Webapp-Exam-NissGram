@@ -40,7 +40,7 @@ public class UserRepository : IUserRepository
 
     }
 
-    public async Task<User?> GetUserByUsernameAsync(string username)
+    /*public async Task<User?> GetUserByUsernameAsync(string username)
     {
         try
         {
@@ -52,7 +52,26 @@ public class UserRepository : IUserRepository
             return null;
         }
 
+    }*/
+
+    public async Task<User?> GetUserByUsernameAsync(string username)
+    {
+        try
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            if (user != null && string.IsNullOrEmpty(user.ProfilePicture))
+            {
+                user.ProfilePicture = "/images/profile_image_default.png"; // Default profile picture
+            }
+            return user;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("[UserRepository] Error fetching user by username: {Username}, error: {Error}", username, e.Message);
+            return null;
+        }
     }
+
 
     public async Task CreateUserAsync(User user)
     {
