@@ -23,14 +23,14 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 
                 <!-- Text Area -->
-                <div class="form-group md-1">
+                <div class="form-group mb-3">
                     <textarea class="form-control form-control-lg" id="textArea" rows="6"
                         placeholder="Write something..." asp-for="Text"></textarea>
                     <span asp-validation-for="Text" class="text-danger"></span>
                 </div>
 
                 <!-- Buttons Section: Aligned in the Same Row -->
-                <div class="form-group md-2 d-flex justify-content-between align-items-center">
+                <div class="form-group d-flex justify-content-between align-items-center">
                     <!-- Upload Image Button -->
                     <button type="button" class="btn btn-secondary btn-upload me-2"
                         onclick="document.getElementById('uploadImage').click();">Upload Image</button>
@@ -44,6 +44,11 @@
 
                 <!-- Validation for Image -->
                 <span asp-validation-for="ImgUrl" class="text-danger"></span>
+
+                <!-- Validation for combined Text and Image -->
+                <div id="combinedValidation" class="text-danger mt-2" style="display: none;">
+                    You must provide either text or an image.
+                </div>
             </form>
         </div>
     </div>

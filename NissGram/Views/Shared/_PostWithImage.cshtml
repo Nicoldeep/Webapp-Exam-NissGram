@@ -6,6 +6,10 @@
 
 <div class="card mb-4 mx-auto" style="max-width: 600px;">
     <div class="card-body">
+        @* Check if there are any profile image registered, if not show default image *@
+        @{
+            var profilePicture = Model.User.ProfilePicture ?? "/images/default-profile.png";
+        }
         <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
             style="color: inherit; text-decoration: none;">
             <div class="d-flex align-items-center mb-3">
@@ -21,11 +25,8 @@
         }
         <p class="card-text">@Model.Text</p>
 
-        <p class="text-muted">
-            <hr>
-            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
-            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
-        </p>
+        <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
+
 
         <div class="d-flex align-items-center">
             <div class="d-flex align-items-center mr-3">

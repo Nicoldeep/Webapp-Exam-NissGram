@@ -17,11 +17,7 @@
         </a>
         <p class="card-text font-italic">Note: @Model.Text</p>
 
-        <p class="text-muted">
-            <hr>
-            <small>Posted on @Model.DateCreated.ToString("MMMM dd, yyyy")</small><br>
-            <small>Last updated on @Model.DateUpdated.ToString("MMMM dd, yyyy")</small>
-        </p>
+        <partial name="_PostDates" model="Tuple.Create(Model.DateCreated, Model.DateUpdated)" />
 
         <div class="d-flex align-items-center">
             <div class="d-flex align-items-center mr-3">

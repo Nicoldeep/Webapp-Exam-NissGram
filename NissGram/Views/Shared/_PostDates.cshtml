@@ -1,0 +1,12 @@
+@model Tuple<DateTime, DateTime>
+
+@{
+    // Changes the formatting style to captial letter
+    var cultureInfo = new System.Globalization.CultureInfo("en-US");
+}
+
+<p class="text-muted">
+    <hr>
+    <small>Posted on @Model.Item1.ToString("dd MMMM, yyyy", cultureInfo)</small><br>
+    <small>Last updated on @Model.Item2.ToString("dd MMMM, yyyy", cultureInfo)</small>
+</p>
