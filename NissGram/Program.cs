@@ -27,6 +27,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     //so that Identity doesnt expect IEmailSender for registration
     options.SignIn.RequireConfirmedAccount = false;
     options.SignIn.RequireConfirmedEmail = false;
+    options.User.RequireUniqueEmail = true;
 })
     .AddEntityFrameworkStores<NissDbContext>()
     .AddDefaultTokenProviders();

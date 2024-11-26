@@ -9,53 +9,57 @@
     <link rel="stylesheet" href="~/css/loginRegister.css" />
 </head>
 
-<div class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh;">
     <div class="row w-100" style="max-width: 800px; transform: translateY(-10%);">
-        <!-- Venstre kolonne med bilde -->
-        <div class="col-md-5 d-flex align-items-center" style="justify-content: flex-start; padding-right: 20px;">
-            <img src="/images/Niss.png" alt="Login Illustration" class="img-fluid" style="max-height: 400px;">
+        <!-- Left column with the illustration -->
+        <div class="col-md-5 d-flex align-items-center justify-content-center">
+            <img src="/images/Niss.png" alt="NissGram Logo" class="img-fluid" style="max-height: 400px;">
         </div>
 
-        <!-- Vertikal strek -->
+        <!-- Vertical divider -->
         <div class="col-md-1 d-flex align-items-center justify-content-center">
-            <div style="border-left: 2px solid #ccc; height: 120%;"></div>
+            <div style="border-left: 2px solid #ccc; height: 100%;"></div>
         </div>
 
-        <!-- Høyre kolonne med login-skjema -->
+        <!-- Right column with the login form -->
         <div class="col-md-6 p-4">
             <h2 class="text-center mb-4">Log in</h2>
+
             <form id="account" method="post">
+                <!-- Validation summary -->
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
+                <!-- Username or Email input -->
                 <div class="form-floating mb-3">
                     <input asp-for="Input.UsernameOrEmail" class="form-control" autocomplete="username" aria-required="true"
-                        placeholder="Enter your username or email" />
-                    <label asp-for="Input.UsernameOrEmail" class="form-label">Username or Email</label>
+                           placeholder="Enter your username or email" />
+                    <label asp-for="Input.UsernameOrEmail">Username or Email</label>
                     <span asp-validation-for="Input.UsernameOrEmail" class="text-danger"></span>
                 </div>
 
-
+                <!-- Password input -->
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Password" class="form-control" type="password" autocomplete="current-password"
-                        aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
+                           aria-required="true" placeholder="Enter your password" />
+                    <label asp-for="Input.Password">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
+                <!-- Remember Me checkbox -->
                 <div class="form-check mb-3">
-                    <input class="form-check-input" asp-for="Input.RememberMe" />
-                    <label asp-for="Input.RememberMe" class="form-check-label" style="font-weight: 500; color: #464b50">
+                    <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMeCheckbox" />
+                    <label asp-for="Input.RememberMe" class="form-check-label" for="rememberMeCheckbox" style="font-weight: 500; color: #464b50;">
                         Remember me
                     </label>
                 </div>
 
+                <!-- Login button -->
                 <button id="login-submit" type="submit" class="btn btn-primary w-100 mb-3">Log in</button>
 
+                <!-- Register link -->
                 <div class="text-center">
-                    <p>
-                        <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl"
-                            class="btn btn-secondary w-100 mb-3">Register</a>
-                    </p>
+                    <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl"
+                       class="btn btn-secondary w-100">Register</a>
                 </div>
             </form>
         </div>

@@ -25,7 +25,7 @@
                     <button type="button" id="uploadProfilePictureButton" class="dropdown-item">Upload Profile Picture</button>
                 </li>
                 <li>
-                    @if (Model.ProfilePicture != "../../wwwwroot/images/profile_image_default.png")
+                    @if (!string.IsNullOrEmpty(Model.ProfilePicture))
                             {
                                 <!-- Call the DeleteProfilePicture method in the controller -->
                                 <a asp-action="DeleteProfilePicture" asp-controller="User" class="dropdown-item text-danger">
@@ -90,8 +90,12 @@
             <button type="submit" class="btn btn-success btn-lg">Save</button>
             <a asp-controller="User" asp-action="Profile" class="btn btn-danger btn-lg">Cancel</a>
         </div>
-
     </form>
+    
+    <form asp-controller="User" asp-action="DeleteUser" method="post" class="mt-4">
+        <button type="submit" class="btn btn-danger btn-lg">Delete Your Account</button>
+    </form>
+        
 </div>
 
 <script src="~/js/userUpdateCreate.js"></script>

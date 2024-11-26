@@ -4,6 +4,7 @@ using NissGram.ViewModels;
 using NissGram.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 
 namespace NissGram.Controllers;
 
@@ -48,7 +49,8 @@ public class UserController : Controller
 
         if (currentUser == null)
         {
-            return NotFound("User not found.");
+            // Redirect to the Identity login page explicitly
+            return Redirect("/Identity/Account/Login");
         }
 
         /*if (string.IsNullOrEmpty(currentUser.ProfilePicture))
@@ -74,7 +76,8 @@ public class UserController : Controller
 
         if (currentUser == null)
         {
-            return NotFound("User not found.");
+            // Redirect to the Identity login page explicitly
+            return Redirect("/Identity/Account/Login");
         }
 
         /*if (string.IsNullOrEmpty(currentUser.ProfilePicture))
@@ -120,7 +123,7 @@ public class UserController : Controller
 
         if (Request.Form["deleteProfilePicture"] == "true")
         {
-            currentUser.ProfilePicture = "/images/profile_images_default.png";
+            currentUser.ProfilePicture = "";
         }
         else if (Request.Form.Files.Count > 0)
         {
@@ -173,12 +176,59 @@ public class UserController : Controller
             }
         }
 
-        currentUser.ProfilePicture = "/images/profile_image_default.png"; // Reset to default
+        currentUser.ProfilePicture = ""; // Reset to default
         await _userRepository.UpdateUserAsync(currentUser);
 
         return RedirectToAction(nameof(UserUpdateCreate));
     }
 
+    //Delete User 
+    [HttpPost]
+    public async Task<IActionResult> DeleteUser()
+    {
+        try
+        {
+            // Ensure user is authenticated before attempting to delete
+            if (string.IsNullOrEmpty(User.Identity?.Name))
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            // Get the username of the current user
+            var username = User.Identity.Name;
+
+            // Fetch the user from the database
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+             // Delete the profile picture if it exists and is not the default picture
+            if (!string.IsNullOrEmpty(user.ProfilePicture) && 
+                user.ProfilePicture != "/images/profile_image_default.png")
+            {
+                var filePath = Path.Combine("wwwroot", user.ProfilePicture.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+            
+            // Log the user out
+            await HttpContext.SignOutAsync();
+            // Delete the user from the database
+            await _userRepository.DeleteUserByUsernameAsync(username);
+
+            
+
+            // Redirect to the Identity login page explicitly
+            return Redirect("/Identity/Account/Logout");
+        }
+        catch (Exception ex)
+        {
+            // Log any exception and return an appropriate error response
+            return StatusCode(500, $"An error occurred while deleting the account: {ex.Message}");
+        }
+    }
+
+    
 
     [HttpGet]
     public async Task<IActionResult> ViewUserProfile(string username)

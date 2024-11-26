@@ -63,7 +63,7 @@ document.getElementById('deleteProfilePictureButton').addEventListener('click', 
     preview.innerHTML = '<img src="/images/profile_image_default.png" alt="Default Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />';
 
     // Disable the delete button
-    deleteButton.disabled = true;
+    //deleteButton.disabled = true;
 
     // Clear the file input
     fileInput.value = '';

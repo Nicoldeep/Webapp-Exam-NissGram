@@ -18,7 +18,7 @@ public class User : IdentityUser
     The following properties are already defined in IdentityUser 
         Id type string 
         Username type string often required and must be unique
-        Email type string required not null
+        Email type string required not null 
         PasswordHash type string 
         Phonenr type string 
         

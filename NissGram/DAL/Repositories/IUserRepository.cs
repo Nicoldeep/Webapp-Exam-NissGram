@@ -9,5 +9,5 @@ public interface IUserRepository
     Task<User?> GetUserByUsernameAsync(string username);
     Task CreateUserAsync(User user);
     Task UpdateUserAsync(User user);
-    Task DeleteUserAsync(int id);
+    Task DeleteUserByUsernameAsync(string username);
 }
