@@ -18,6 +18,10 @@ namespace NissGram.ViewModels
             Notes = user.Posts?.Where(p => string.IsNullOrEmpty(p.ImgUrl)).ToList() ?? new List<Post>();
             PictureCount = Pictures.Count;
             NoteCount = Notes.Count;
+
+            if(string.IsNullOrEmpty(user.ProfilePicture)){
+                User.ProfilePicture = "images/profile_image_default.png";
+            }
         }
     }
 }

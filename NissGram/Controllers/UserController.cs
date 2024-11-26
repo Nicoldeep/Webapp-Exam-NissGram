@@ -87,7 +87,7 @@ public class UserController : Controller
 
         var model = new UserUpdateCreateViewModel
         {
-            ProfilePicture = currentUser.ProfilePicture ?? "/images/profile_images_default.png",
+            ProfilePicture = currentUser.ProfilePicture,
             About = currentUser.About,
             Username = currentUser.UserName,
             FirstName = currentUser.FirstName,
@@ -114,18 +114,18 @@ public class UserController : Controller
             return NotFound("User not found.");
         }
 
-        if ((await _userRepository.GetAllUsersAsync())
-            .Any(u => u.UserName == model.Username && u.Id != currentUser.Id))
-        {
-            ModelState.AddModelError("Username", "This username is already taken.");
-            return View(model);
-        }
+    // if ((await _userRepository.GetAllUsersAsync())
+    //     .Any(u => u.UserName == model.Username && u.Id != currentUser.Id))
+    // {
+    //     ModelState.AddModelError("Username", "This username is already taken.");
+    //     return View(model);
+    // }
 
-        if (Request.Form["deleteProfilePicture"] == "true")
-        {
-            currentUser.ProfilePicture = "";
-        }
-        else if (Request.Form.Files.Count > 0)
+    // if (Request.Form["deleteProfilePicture"] == "true")
+    // {
+    //     currentUser.ProfilePicture = "";
+    // }
+    if (Request.Form.Files.Count > 0)
         {
             var file = Request.Form.Files[0];
             if (file.Length > 0)
