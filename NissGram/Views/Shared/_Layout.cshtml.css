@@ -69,13 +69,13 @@
   display: none; 
 }
 
-/* Profile icon styling within a circular frame */
+/* Profile icon styling within a circular frame 
 .profile-icon {
   width: 80%; 
   height: auto; 
   border-radius: 50%; 
   object-fit: cover; 
-}
+}*/
 
 /* Footer styling at the bottom of the page */
 .footer {

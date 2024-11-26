@@ -1,0 +1,11 @@
+@using NissGram.ViewModels
+@model PostsViewModel
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="col">
+            <partial name="_PostWithImage" model="@Model.Posts" />
+        </div>
+    }
+</div>

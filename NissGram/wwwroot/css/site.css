@@ -31,16 +31,16 @@ body {
 }
 
 
-/* Generelle regler for ikonbokser */
+/* Generelle regler for ikonbokser 
 .circle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px; /* Diameter */
-  height: 60px; /* Diameter */
-  border-radius: 50%; /* Gjør dem runde */
+  width: 60px;  
+  height: 60px;  
+  border-radius: 50%;  
 
-}
+}*/
 
 /* Spesifikk regel for profilboksen */
 .profile-container {
@@ -50,8 +50,8 @@ body {
 /* Profilbildet */
 .profile-picture {
   width: 100%; /* Tilpass bildet til containerens bredde */
-  height: auto; /* Behold proporsjonene */
-  object-fit: scale-down; /* Sørger for at bildet ikke blir kuttet */
+  height: 100%; /* Behold proporsjonene */
+  object-fit: fill; /* Sørger for at bildet ikke blir kuttet */
   border-radius: 50%; /* Gjør bildet rundt */
 }
 
@@ -60,43 +60,4 @@ body {
   transform: scale(1.1); /* Liten zoom ved hover */
   filter: brightness(1.1); /* Gjør ikonet lysere ved hover */
   cursor: pointer; /* Endre markøren til håndikon */
-}
-
-.modal-content {
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.modal-dialog.modal-xl {
-  max-width: 90%;
-  max-height: auto;
-  padding-top: 1%;
-}
-
-.modal-body {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 14px;
-}
-
-.modal-body .left {
-  width: 50%;
-  padding: 2rem;
-}
-
-.modal-body .right {
-  width: 50%;
-  overflow-y: auto;
-  padding: 2rem;
-}
-
-.modal-body img {
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-.list-group-item {
-  margin-bottom: 10px;
-  border-radius: 5px;
 }

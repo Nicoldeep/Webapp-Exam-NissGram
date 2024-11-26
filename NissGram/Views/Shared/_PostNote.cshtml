@@ -6,10 +6,7 @@
 
 <div class="card mb-4 mx-auto" style="max-width: 600px;">
     <div class="card-body">
-        @* Check if there are any profile image registered, if not show default image *@
-        @{
-            var profilePicture = Model.User.ProfilePicture ?? "/images/default-profile.png";
-        }
+       
         <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
             style="color: inherit; text-decoration: none;">
             <div class="d-flex align-items-center mb-3">

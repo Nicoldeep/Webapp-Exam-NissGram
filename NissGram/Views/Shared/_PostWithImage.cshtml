@@ -1,5 +1,9 @@
 @model NissGram.Models.Post
 
+<head>
+    <link rel="stylesheet" href="~/css/postCard.css" />
+</head>
+
 <div class="card mb-4 mx-auto" style="max-width: 600px;">
     <div class="card-body">
         <a asp-controller="User" asp-route-username="@Model.User.UserName" asp-action="ViewUserProfile"
