@@ -176,6 +176,8 @@ public class UserController : Controller
             }
         }
 
+        
+
         currentUser.ProfilePicture = ""; // Reset to default
         await _userRepository.UpdateUserAsync(currentUser);
 
@@ -209,23 +211,24 @@ public class UserController : Controller
                 {
                     System.IO.File.Delete(filePath);
                 }
+
             }
-            
-            // Log the user out
-            await HttpContext.SignOutAsync();
-            // Delete the user from the database
-            await _userRepository.DeleteUserByUsernameAsync(username);
 
-            
+              // Delete the user from the database
+                await _userRepository.DeleteUserByUsernameAsync(username);
 
-            // Redirect to the Identity login page explicitly
-            return Redirect("/Identity/Account/Logout");
-        }
-        catch (Exception ex)
-        {
-            // Log any exception and return an appropriate error response
-            return StatusCode(500, $"An error occurred while deleting the account: {ex.Message}");
-        }
+                // Sign the user out after deletion
+                await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+
+                // Redirect to the login page or homepage
+                return RedirectToAction("Index", "Home");
+                }
+
+                catch (Exception ex)
+                {
+                    // Log any exception and return an appropriate error response
+                    return StatusCode(500, $"An error occurred while deleting the account: {ex.Message}");
+                }
     }
 
     

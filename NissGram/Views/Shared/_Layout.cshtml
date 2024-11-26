@@ -25,7 +25,7 @@
         <a asp-controller="Home" asp-action="Index" class="navbar-brand">
             <img src="~/images/Niss.png" alt="NissGram Logo" style="height: 35px; padding: 5px;">
         </a>
-        
+    </header>
         @if (SignInManager.IsSignedIn(User))
         {
             // Hent den innloggede brukeren
@@ -51,7 +51,7 @@
                 </form>
             </nav>
         }
-    </header>
+  
 
     @if (SignInManager.IsSignedIn(User))
     {
