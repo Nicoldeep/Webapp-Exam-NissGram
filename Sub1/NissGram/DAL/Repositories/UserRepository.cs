@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using NissGram.Models;
+using NissGram.DAL.Interfaces;
 
 namespace NissGram.DAL.Repositories;
+
 public class UserRepository : IUserRepository
 {
     private readonly NissDbContext _db;

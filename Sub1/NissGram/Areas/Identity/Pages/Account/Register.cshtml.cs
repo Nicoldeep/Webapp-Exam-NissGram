@@ -74,7 +74,7 @@ namespace NissGram.Areas.Identity.Pages.Account
             public string ProfilePicture { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "Username cannot exceed 100 characters.")]
+            [StringLength(30, ErrorMessage = "Username cannot exceed 30 characters.")]
             public string Username { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -90,7 +90,7 @@ namespace NissGram.Areas.Identity.Pages.Account
             public string FirstName { get; set; } // Add FirstName
 
             [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}", ErrorMessage = "The Name must be letters and between 2 to 20 characters.")]
-            [Display(Name = "First name")]
+            [Display(Name = "Last name")]
             public string LastName { get; set; }  // Add LastName
 
             [StringLength(500, ErrorMessage = "About section cannot exceed 500 characters.")]

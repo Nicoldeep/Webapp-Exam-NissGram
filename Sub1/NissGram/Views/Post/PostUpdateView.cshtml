@@ -38,10 +38,13 @@
                     <span asp-validation-for="Text" class="text-danger"></span>
                 </div>
                 <br>
+                
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <!-- Buttons Section: Aligned in the Same Row -->
                 <div class="form-group d-flex justify-content-between align-items-center">
                     <!-- Upload Image Button -->
-                    <button type="button" class="btn btn-secondary btn-upload me-2"
+                    <button type="button" class="btn btn-primary btn-lg btn-post"
                         onclick="document.getElementById('uploadImage').click();">Upload Image</button>
                     <!-- Hidden file input -->
                     <input type="file" id="uploadImage" name="NewImage" class="file-input" accept="image/*"
@@ -57,18 +60,5 @@
 </div>
 
 <script src="~/js/createPost.js"></script>
-<script>
-    // Preview uploaded image dynamically
-    function previewImage(event) {
-        const imagePreview = document.getElementById('imagePreview');
-        const file = event.target.files[0];
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
+

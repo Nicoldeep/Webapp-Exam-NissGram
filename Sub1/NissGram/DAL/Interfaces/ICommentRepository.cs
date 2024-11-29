@@ -1,6 +1,6 @@
 using NissGram.Models;
 
-namespace NissGram.DAL.Repositories
+namespace NissGram.DAL.Interfaces
 {
     public interface ICommentRepository
     {

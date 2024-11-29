@@ -32,21 +32,21 @@ function previewImage(event) {
     }
 }
 
-// Function to validate form submission
-function validateForm(event) {
-    const textArea = document.getElementById('textArea').value.trim();
-    const uploadImage = document.getElementById('uploadImage').files.length > 0;
+// // Function to validate form submission
+// function validateForm(event) {
+//     const textArea = document.getElementById('textArea').value.trim();
+//     const uploadImage = document.getElementById('uploadImage').files.length > 0;
 
-    if (!textArea && !uploadImage) {
-        event.preventDefault(); // Prevent form submission
-        const validationMessage = document.getElementById('combinedValidation');
-        validationMessage.style.display = 'block';
-        validationMessage.textContent = 'You must provide either text or an image.';
-    } else {
-        const validationMessage = document.getElementById('combinedValidation');
-        validationMessage.style.display = 'none';
-    }
-}
+//     if (!textArea && !uploadImage) {
+//         event.preventDefault(); // Prevent form submission
+//         const validationMessage = document.getElementById('combinedValidation');
+//         validationMessage.style.display = 'block';
+//         validationMessage.textContent = 'You must provide either text or an image.';
+//     } else {
+//         const validationMessage = document.getElementById('combinedValidation');
+//         validationMessage.style.display = 'none';
+//     }
+// }
 
 // Attach event listeners
 document.addEventListener('DOMContentLoaded', function () {

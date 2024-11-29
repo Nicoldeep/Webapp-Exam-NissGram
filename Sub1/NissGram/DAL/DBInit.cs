@@ -10,7 +10,7 @@ public static class DBInit
     {
         using var serviceScope = app.ApplicationServices.CreateScope();
         NissDbContext context = serviceScope.ServiceProvider.GetRequiredService<NissDbContext>();
-        //context.Database.EnsureDeleted();
+        context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
 
 #nullable disable

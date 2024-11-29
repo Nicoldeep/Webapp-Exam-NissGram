@@ -1,138 +1,74 @@
+/*Dropdown button both for burger icon on profile page and pluss icon to upload image*/
 #dropdownMenuButton {
-    background-color: #e58e00; /* Orange background */
-    border: none; /* Remove border */
-    color: rgb(255, 255, 255); /* White "+" symbol */
+    background-color: #ffb703;
+    border: none; 
+    color: rgb(255, 255, 255); 
     font-size: 20px; /* Adjust size if needed */
 }
 
 #dropdownMenuButton:hover {
-    background-color: rgb(228, 127, 60); /* Slightly darker shade on hover */
+    background-color: #fb8500; 
 }
 
+  /*Description styling to ensure it wraps and stays inside the frame*/
 .description-text {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal; /* Ensures that text will break onto the next line */
     word-break: break-word; /* Ensures words are broken when necessary */
     max-width: 100%; /* Ensure it does not overflow its container */
 }
 
-.modal-content {
-    border-radius: 10px;
-    padding: 20px;
+/*background frame color*/
+.profile-header-frame {
+    background-color: #dee7e7; 
+    border: 1px solid #ccc; 
 }
 
-.modal-header {
-    border-bottom: none;
-    font-size: 1.3rem;
-}
-
-.modal-body p {
-    font-size: 1.2rem; /* Større brødtekst i modalen */
-}
-
-.modal-footer {
-    border-top: none;
-    display: flex;
-    justify-content: space-between; /* Flytt knappene til ytterpunktene */
-    gap: 10px; /* Avstand mellom knappene */
-    padding: 0.5rem 1rem; /* Juster padding om nødvendig */
-    width: 100%; /* Sørg for at containeren tar hele bredden */
-    box-sizing: border-box; /* Inkluder padding i bredden */
-}
-
-/* Delete account button */
-.delete-account-button {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    padding: 0.8rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    margin: auto; /* Center the button */
-}
-
-.delete-account-button:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-    transform: scale(1.05);
-}
-
-/* Modal footer buttons */
-.confirm-delete-button {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    font-size: 1rem;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    margin: 0; /* Fjern all ekstra margin */
-}
-
-.confirm-delete-button:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-}
-
-.cancel-delete-button {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    font-size: 1rem;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    margin: 0; /* Fjern all ekstra margin */
-}
-
-.cancel-delete-button:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
-}
-
-.confirm-delete-button,
-.cancel-delete-button {
-    margin: 0;
+/* Username styling to ensure it wraps and stays inside the frame */
+.username-wrapper h2 {
+    word-break: break-word; /* Ensure long words break properly */
+    max-width: 100%; /* Constrain to the container's width */
 }
 
 /* Match buttons to the background color */
 .btn-primary {
-    background-color: #8fa0c3; /* Same as body background */
-    border-color: #8fa0c3; /* Match border to background */
-    color: #ffffff; /* Text color for visibility */
+    background-color: #71a8a6; 
+    border-color: #71a8a6; 
+    color: #ffffff; 
 }
 
 .btn-primary:hover {
-    background-color: rgb(92, 124, 194); /* Slightly darker for hover */
-    border-color: rgb(170, 183, 211); /* Matching hover border */
-    color: #ffffff; /* Keep text color same */
+    background-color: #387478; 
+    border-color: #387478; 
+    color: #ffffff; 
 }
 
-/* Secondary button to match the background */
+/* Secondary button grey */
 .btn-secondary {
-    background-color: #8fa0c3; /* Same as body background */
-    border-color: #8fa0c3; /* Match border to background */
-    color: #ffffff; /* Text color for visibility */
+    background-color: #7e8188; 
+    border-color: #7e8188; 
+    color: #ffffff; 
 }
 
 .btn-secondary:hover {
-    background-color: rgb(170, 183, 211); /* Slightly darker for hover */
-    border-color: rgb(170, 183, 211); /* Matching hover border */
-    color: #000000; /* Keep text color same */
+    background-color: rgb(94, 98, 109); 
+    border-color: rgb(94, 98, 109); 
+    color: #ffffff;
 }
 
 
 /* Ensure text stays within the button and scales properly */
 .btn-primary, .btn-secondary {
     display: flex; /* flexbox for inner alignment */
-    justify-content: center; /* Center text horizontally */
-    /*align-items: center;  Center text vertically */
-   /* white-space: nowrap;  Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow if text gets too long */
-    /* text-overflow: ellipsis; Add ellipsis if text overflows */
-   /* max-width: 100%;  Prevent the button from exceeding its container */
-    /*padding: 0.5rem 1rem;  Ensure enough padding */
-    /*box-sizing: border-box;  Include padding in width calculation */
+    justify-content: center;
+    overflow: hidden;
+    
 }
 
 .btn-primary:hover, .btn-secondary:hover {
     transform: scale(1.05); /* Slight scaling on hover for effect */
 }
 
+.hover-scale:hover {
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease; /* Smooth scaling animation */
 
+}

@@ -23,17 +23,13 @@ public class User : IdentityUser
         Phonenr type string 
         
     */
+
     public string? ProfilePicture { get; set; } 
-    [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}", ErrorMessage = "The Name must be letters and between 2 to 20 characters.")]
-    [Display(Name = "First name")]
     public string? FirstName { get; set; }  
 
-    [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}", ErrorMessage = "The Name must be letters and between 2 to 20 characters.")]
-    [Display(Name = "Last name")]
     public string? LastName { get; set; }  
 
-    [StringLength(500, ErrorMessage = "About section cannot exceed 500 characters.")]
-    public string? About { get; set; }  // Added this - db?
+    public string? About { get; set; }  
 
     //Posts created by the user
     public virtual ICollection<Post>? Posts { get; set; } = new List<Post>();

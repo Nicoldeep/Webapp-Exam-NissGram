@@ -5,39 +5,36 @@
     {
         @if (Model.Pictures != null && Model.Pictures.Any())
         {
-            <h3>Pictures</h3>
             <partial name="_PicturesView" model="Model.Pictures" />
         }
         else
         {
-            <h3>Pictures</h3>
-            <p>No content available for the selected section.</p>
+            <h3>No Pictures</h3>
+            <p>No pictures available!</p>
         }
     }
     else if (Context.Request.Query["section"].ToString() == "Notes")
     {
         @if (Model.Notes != null && Model.Notes.Any())
         {
-            <h3>Notes</h3>
             <partial name="_NotesView" model="Model.Notes" />
         }
         else
         {
-            <h3>Notes</h3>
-            <p>No content available for the selected section.</p>
+            <h3>No Notes</h3>
+            <p>No notes available!</p>
         }
     }
     else if (Context.Request.Query["section"].ToString() == "LikedPosts")
     {
         @if (Model.LikedPosts != null && Model.LikedPosts.Any())
         {
-            <h3>Activity</h3>
             <partial name="_AllPosts" model="Model.LikedPosts" />
         }
         else
         {
             <h3>No Activity</h3>
-            <p>No content available for the selected section.</p>
+            <p>No liked posts yet!</p>
         }
     }
     

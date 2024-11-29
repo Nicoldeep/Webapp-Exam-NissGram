@@ -42,6 +42,5 @@ namespace NissGram.ViewModels
         }
         public string? StatusMessage { get; set; }
 
-
     }
 }

@@ -5,6 +5,8 @@ using NissGram.DAL;
 using NissGram.Models;
 using NissGram.ViewModels;
 using System.Security.Claims;
+using NissGram.DAL.Interfaces;
+
 
 
 namespace NissGram.Controllers;
@@ -156,11 +158,22 @@ public class PostController : Controller
             return NotFound();
         }
 
-        // Oppdater tekst
-        if (!string.IsNullOrWhiteSpace(model.Text) && model.Text != existingPost.Text)
+        // // Oppdater tekst
+        // if (!string.IsNullOrWhiteSpace(model.Text) && model.Text != existingPost.Text)
+        // {
+        //     existingPost.Text = model.Text;
+        // }
+
+        // Validate: Ensure at least one of Text or Image exists
+        if (string.IsNullOrWhiteSpace(model.Text) && string.IsNullOrEmpty(existingPost.ImgUrl) && model.NewImage == null)
         {
-            existingPost.Text = model.Text;
+            ModelState.AddModelError("", "A post must contain either text or an image.");
+            return View("PostUpdateView", model);
         }
+
+        // Update text
+        existingPost.Text = string.IsNullOrWhiteSpace(model.Text) ? null : model.Text;
+
 
         // Håndter ny bildeopplasting
         if (model.NewImage != null && model.NewImage.Length > 0)

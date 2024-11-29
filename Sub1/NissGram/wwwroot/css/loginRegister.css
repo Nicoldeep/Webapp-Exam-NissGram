@@ -1,41 +1,24 @@
 body {
-    background-color: #8fa0c3; /* Lys grå bakgrunn */
-    color: #000000; /* Mørk grå tekst */
-}
-.col-md-5 {
-    display: flex;
-    justify-content: flex-start; /* Flytter logoen mot venstre */
-    align-items: center; /* Vertikal sentrering */
-    padding-right: 40px; /* Juster etter behov */
+    background-color: #8eb8b6; 
+    color: #000000; 
 }
 
+/*login header*/
 .mb-4 {
     color: #ffffff;
-    font-size: 50px;
+    font-size: 60px;
 }
 
-/* Register button */
+/* Register & login button */
 .btn-primary {
-    background-color:#e58e00; 
-    border-color: #e58e00; 
+    background-color:#ffb703;
+    border-color: #ffb703;
     color: #ffffff; /* Hvit tekst */
 }
 
 .btn-primary:hover {
-    background-color:  rgb(228, 127, 60); /* Mørkere blå ved hover */
-    border-color: rgb(228, 127, 60); /* Dypere kant ved hover */
+    background-color:  #fb8500; /* Mørkere blå ved hover */
+    border-color: #fb8500; /* Dypere kant ved hover */
     color: #fffdfd; /* Lysere tekst ved hover */
 }
 
-/* Sekundær knapp (Register) */
-.btn-secondary {
-    background-color: #6a7482; /* Mørk grå */
-    border-color: #6a7482; /* Dypere grå */
-    color: #ffffff; /* Hvit tekst */
-}
-
-.btn-secondary:hover {
-    background-color: #4e555b; /* Mørkere grå ved hover */
-    border-color: #3c4349; /* Dypere kant ved hover */
-    color: #e6e6e6; /* Lysere tekst ved hover */
-}

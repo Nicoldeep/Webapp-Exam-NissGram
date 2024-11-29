@@ -1,0 +1,22 @@
+.modal-content {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+    font-size: 1.rem;
+}
+
+.modal-body p {
+    font-size: 1.2rem; /* Større brødtekst i modalen */
+}
+
+.modal-footer {
+    justify-content: space-between; /* Flytt knappene til ytterpunktene */
+}
+
+.hover-scale:hover {
+    transform: scale(1.05); /* Slightly increase size */
+    transition: transform 0.2s ease; /* Smooth scaling animation */
+}

@@ -1,32 +1,48 @@
-﻿/* Full-screen layout with header and side navbar */
-.d-flex {
-  min-height: auto;
-}
-
-/* Fixed header at the top with space for side navbar on the left */
+﻿/* Fixed header at the top with space for side navbar on the left */
 .fixed-header {
   position: fixed;
   top: 0;
-  left: 0;
+  /* left: 0; */
   width: 100%;
   height: 60px;
-  background-color: #0077b6;
+  /* background-color: #0077b6; */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1030;
+  background-color: #387478 !important;
+
 }
+
+/* Profilepicture icon on the navbar */
+.profile-picture {
+  width: 100%; /* Tilpass bildet til containerens bredde */
+  height: 100%; /* Behold proporsjonene */
+  object-fit: fill; /* Sørger for at bildet ikke blir kuttet */
+  border-radius: 50%; /* Gjør bildet rundt */
+}
+
+.side-navbar {
+  background-color: #71a8a6 !important;
+}
+
+/* Hover-effekt
+.nav-link:hover {
+  transform: scale(1.1); /* Liten zoom ved hover 
+  filter: brightness(1.1); /* Gjør ikonet lysere ved hover 
+  cursor: pointer; /* Endre markøren til håndikon 
+} */
 
 /* Logo image styling in the header */
 .navbar-brand{
-  height: 50px;
-  padding: 50px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  /* height: 50px; */
+  /* padding: 50px; */
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); */
 }
 
 /* Main content area with margins for header and side navbar */
 .content-container {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   margin-top: 60px;
   margin-left: 80px;
   padding: 20px;
@@ -39,7 +55,7 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding-top: 80px;
   border-right: 1px solid #e5e5e5;
   background-color: #f2f4f7; /* Softer color for sidebar background */
@@ -47,10 +63,10 @@
 
 /* Styling for the logout button at the bottom of the sidebar */
 .circle.logout {
-  align-self: center;
-  margin-bottom: 15px; 
-  padding: 8px; 
-  margin-left: 5px; 
+  /* align-self: center; */
+  /* margin-bottom: 15px;  */
+  /* padding: 8px;  */
+  /* margin-left: 5px;  */
 }
 
 /* General styling for circular buttons/icons */
@@ -59,9 +75,9 @@
   height: 50px;
   border-radius: 50%; 
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* overflow: hidden; */
 }
 
 /* Icon bar (alternative navbar) for smaller screens */
@@ -71,11 +87,12 @@
 
 /* Profile icon styling within a circular frame */
 .profile-icon {
-  width: 80%; 
-  height: auto; 
-  border-radius: 50%; 
-  object-fit: cover; 
+  /* width: 80%;  */
+  /* height: auto;  */
+  /* border-radius: 50%;  */
+  /* object-fit: cover;  */
 }
+
 
 /* Footer styling at the bottom of the page */
 .footer {
@@ -83,13 +100,13 @@
   bottom: 0;
   left: 80px;
   width: calc(100% - 80px);
-  background-color: #f8f9fa;
+  background-color: #dee7e7;
   text-align: center;
   padding: 0.5rem 0;
   font-size: 0.8rem;
   line-height: 1.5rem;
-  border-top: 1px solid #e5e5e5;
-  z-index: 1000;
+  /* border-top: 1px solid #e5e5e5; */
+  /* z-index: 1000; */
 }
 
 /* Full-width footer for login and register pages */
@@ -98,6 +115,7 @@
   width: 100%;
   margin-left: 0;
 }
+
 
 /* Responsive adjustments for small screens */
 @media (max-width: 768px) {

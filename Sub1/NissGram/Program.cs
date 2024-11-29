@@ -8,6 +8,7 @@ using NissGram.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using NissGram.DAL.Interfaces;
 //Oppretter en instans av WebApplicationBuilder som brukes til å konfigurere
 //applikasjonen. args er komamandolinje argumenter som sendes inn i applikasjonen
 var builder = WebApplication.CreateBuilder(args);

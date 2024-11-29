@@ -92,14 +92,14 @@
 
         <!-- Submit and Cancel Buttons -->
         <div class="d-flex justify-content-center gap-4 mt-4">
-            <button type="submit" class="btn btn-success btn-lg">Save</button>
+            <button type="submit" class="btn btn-success btn-lg hover-scale">Save</button>
             <a asp-controller="User" asp-action="Profile" class="btn btn-secondary btn-lg">Cancel</a>
         </div>
     </form>
 
     <div class="text-center mt-5">
     <!-- Delete Account Button -->
-    <button type="button" class="btn btn-danger btn-lg delete-account-button" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+    <button type="button" class="btn btn-danger btn-lg delete-account-button hover-scale" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
         Delete Your Account
     </button>
 </div>
@@ -119,10 +119,10 @@
                     <!-- Form for deleting account -->
                     <form asp-action="DeleteUser" method="post" class="d-inline">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger confirm-delete-button">Yes, Delete</button>
+                        <button type="submit" class="btn btn-danger btn-lg hover-scale confirm-delete-button">Yes, Delete</button>
                     </form>
                     <!-- Cancel button -->
-                    <button type="button" class="btn btn-secondary cancel-delete-button" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary btn-lg cancel-delete-button" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

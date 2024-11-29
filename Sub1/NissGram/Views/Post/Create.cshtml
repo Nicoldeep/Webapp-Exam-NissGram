@@ -1,9 +1,5 @@
 @model NissGram.Models.Post
 
-<head>
-    <link rel="stylesheet" href="~/css/createPost.css" />
-</head>
-
 <div class="container mt-3">
     <div class="text-center mb-4">
         <h2>Share something!</h2>
@@ -32,7 +28,7 @@
                 <!-- Buttons Section: Aligned in the Same Row -->
                 <div class="form-group d-flex justify-content-between align-items-center">
                     <!-- Upload Image Button -->
-                    <button type="button" class="btn btn-secondary btn-upload me-2"
+                    <button type="button" class="btn btn-primary btn-lg btn-post"
                         onclick="document.getElementById('uploadImage').click();">Upload Image</button>
                     <!-- Hidden file input -->
                     <input type="file" id="uploadImage" name="uploadImage" class="file-input" accept="image/*"
@@ -46,9 +42,9 @@
                 <span asp-validation-for="ImgUrl" class="text-danger"></span>
 
                 <!-- Validation for combined Text and Image -->
-                <div id="combinedValidation" class="text-danger mt-2" style="display: none;">
+                @* <div id="combinedValidation" class="text-danger mt-2" style="display: none;">
                     You must provide either text or an image.
-                </div>
+                </div> *@
             </form>
         </div>
     </div>

@@ -1,0 +1,29 @@
+/* General Modal Styling */
+.modal-content {
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.modal-dialog.modal-xl {
+  max-width: 90%;
+  max-height: auto;
+  padding-top: 1%;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.modal-body .left {
+  width: 50%;
+  padding: 2rem;
+}
+
+.modal-body .right {
+  width: 50%;
+  padding: 2rem;
+  word-break: break-word; /* Ensure long words break properly */
+}

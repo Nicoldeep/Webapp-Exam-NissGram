@@ -8,7 +8,10 @@
                  class="rounded-circle me-5" style="width: 100px; height: 100px;">
             <div>
                 <!-- Username -->
-                <h2 class="mb-4">@Model.User.UserName</h2>
+                <div class="username-wrapper">
+                    <h2 class="mb-4">@Model.User.UserName</h2>
+                </div>
+
                 <!-- Picture Count and Note Count -->
                 <p class="mb-4 fs-5">
                     <span>@Model.PictureCount Pictures</span> |

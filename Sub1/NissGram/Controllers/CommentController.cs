@@ -5,6 +5,8 @@ using NissGram.DAL;
 using NissGram.Models;
 using NissGram.ViewModels;
 using System.Security.Claims;
+using NissGram.DAL.Interfaces;
+
 
 
 namespace NissGram.Controllers;
@@ -23,10 +25,10 @@ public class CommentController : Controller
         _logger = logger;
     }
 
+    //Method to add comment on post
     [HttpPost]
     public async Task<IActionResult> Add(int postId, string text)
     {
-
 
         // Fetch the user
         var user = await _userRepository.GetUserByUsernameAsync(User.Identity?.Name ?? string.Empty);

@@ -6,6 +6,7 @@ using NissGram.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using NissGram.DAL.Interfaces;
 
 namespace NissGram.Controllers;
 

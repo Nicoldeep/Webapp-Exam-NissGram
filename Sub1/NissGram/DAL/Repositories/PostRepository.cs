@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NissGram.Models;
+using NissGram.DAL.Interfaces;
 
 namespace NissGram.DAL.Repositories;
 public class PostRepository : IPostRepository
