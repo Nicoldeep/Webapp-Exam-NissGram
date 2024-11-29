@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+//import { getPosts } from './../api/apiClient';
+import PostCard from '../components/PostCard';
+import { Post } from '../types/post';
 
 const HomePage: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
   return (
-      <div>
-        <h1>Welcome to NissGram</h1>
-        <p>Explore, share, and connect with friends!</p>
-      </div>
+    <div className="container">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </div>
   );
 };
 
