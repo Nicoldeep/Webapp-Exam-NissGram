@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
-    username: '', // Changed from usernameOrEmail
+    usernameOrEmail: '',
     password: '',
   });
   const [rememberMe, setRememberMe] = useState(false);
@@ -23,41 +23,34 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch('http://localhost:5024/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Viktig for å tillate cookies
         body: JSON.stringify({
-          username: formData.username, // Match the field name with what the backend expects
+          username: formData.usernameOrEmail,
           password: formData.password,
           rememberMe: rememberMe,
         }),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
-        console.log('Response from server:', responseData);
-  
-        // Check for success message instead of token
-        if (responseData.message === 'Login successful.') {
-          console.log('Login was successful.');
-          setError('');
-          navigate('/'); // Redirect to the homepage
-        } else {
-          setError('Login failed: Unexpected response from the server.');
-          console.log('Unexpected response:', responseData);
-        }
+        console.log('Login successful', responseData);
+
+        // Videresend til hjemmesiden
+        navigate('/');
       } else {
         const errorData = await response.json();
-        setError(errorData.message || 'Login failed. Please check your credentials.');
-        console.log('Server responded with an error:', errorData);
+        setError(errorData.message || 'Login failed. Please try again.' + response);
       }
     } catch (err) {
       setError('Unable to connect to the server. Please try again later.');
-      console.error('Error during login:', err);
+      console.error(err);
     }
   };
 
@@ -82,14 +75,14 @@ const LoginPage: React.FC = () => {
               <input
                 type="text"
                 className="form-control"
-                id="username"
-                name="username"
-                placeholder="Enter your username"
-                value={formData.username}
+                id="usernameOrEmail"
+                name="usernameOrEmail"
+                placeholder="Enter your username or email"
+                value={formData.usernameOrEmail}
                 onChange={handleChange}
                 required
               />
-              <label htmlFor="username">Username</label>
+              <label htmlFor="usernameOrEmail">Username or Email</label>
             </div>
 
             <div className="form-floating mb-3">

@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Serilog;
-using NissGram.DAL; 
+using NissGram.DAL;
 using NissGram.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Claims;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Set up connection string
-var connectionString = builder.Configuration.GetConnectionString("NissDbContextConnection") 
+var connectionString = builder.Configuration.GetConnectionString("NissDbContextConnection")
     ?? throw new InvalidOperationException("Connection string 'NissDbContextConnection' not found.");
 
 // Add services to the container
@@ -35,6 +35,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 // Configure authentication cookies
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.Cookie.SameSite = SameSiteMode.None; // For cross-origin cookies
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Enforce HTTPS in production
+    options.Cookie.HttpOnly = true; // Prevent JavaScript access to cookies
     options.LoginPath = "/api/auth/login";
     options.AccessDeniedPath = "/api/auth/accessdenied";
     options.LogoutPath = "/api/auth/logout";
@@ -70,9 +73,10 @@ builder.Services.AddControllersWithViews(config =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
-        builder.AllowAnyOrigin() // Consider restricting this in production
+        builder.WithOrigins("http://localhost:3000") // Frontend URL
                .AllowAnyMethod()
-               .AllowAnyHeader());
+               .AllowAnyHeader()
+               .AllowCredentials()); // Support cookies
 });
 
 // Add Swagger/OpenAPI
@@ -107,11 +111,23 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
-app.UseCors("CorsPolicy");
+app.UseCors("CorsPolicy"); // Apply CORS policy
 app.UseAuthentication(); // Enable ASP.NET Identity authentication
 app.UseAuthorization(); // Enable authorization
 
+// Map logout endpoint
+app.MapPost("/logout", async (SignInManager<User> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok();
+}).RequireAuthorization();
 
+// Map pingauth endpoint
+app.MapGet("/pingauth", (ClaimsPrincipal user) =>
+{
+    var email = user.FindFirstValue(ClaimTypes.Email);
+    return Results.Json(new { email });
+}).RequireAuthorization();
 
 // Map routes
 app.MapControllers(); // Attribute-based API routes

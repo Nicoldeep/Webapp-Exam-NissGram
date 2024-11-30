@@ -7,7 +7,6 @@ using NissGram.DTOs;
 
 namespace NissGram.Controllers;
 
-
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
@@ -29,6 +28,16 @@ public class AuthController : ControllerBase
         return Ok("Test endpoint working.");
     }
 
+    [HttpGet("check-auth")]
+    public IActionResult CheckAuth()
+    {
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            return Ok(new { message = "User is authenticated" });
+        }
+        return Unauthorized(new { message = "User is not authenticated" });
+    }
+
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
@@ -45,7 +54,7 @@ public class AuthController : ControllerBase
         return Unauthorized("Invalid username or password.");
     }
 
-        [AllowAnonymous]
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
@@ -54,13 +63,13 @@ public class AuthController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-    
+
         // Ensure passwords match (redundant since it's validated by the DTO, but good for safety)
         if (registerDto.Password != registerDto.ConfirmPassword)
         {
             return BadRequest("Passwords do not match.");
         }
-    
+
         // Map the DTO to the User model
         var user = new User
         {
@@ -71,14 +80,14 @@ public class AuthController : ControllerBase
             About = registerDto.About,
             ProfilePicture = registerDto.ProfilePicture
         };
-    
+
         // Create the user in the database
         var result = await _userManager.CreateAsync(user, registerDto.Password);
-    
+
         if (result.Succeeded)
         {
             // Optionally add user to default roles or perform additional setup here
-    
+
             return Ok(new
             {
                 Message = "User registered successfully.",
@@ -87,19 +96,21 @@ public class AuthController : ControllerBase
                 Email = user.Email
             });
         }
-    
+
         // Return errors if registration failed
         return BadRequest(new
         {
             Errors = result.Errors.Select(e => e.Description).ToArray()
         });
     }
-    
-    
+
+
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
         return Ok("Logged out successfully.");
     }
+
+
 }

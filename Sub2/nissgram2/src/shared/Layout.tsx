@@ -11,14 +11,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="layout-container">
+   <>
       <Header />
-      <div className="layout-content">
         <Sidebar />
         <main className="content-container">{children || <Outlet />}</main>
-      </div>
       <Footer />
-    </div>
+      </>
   );
 };
 

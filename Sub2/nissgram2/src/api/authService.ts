@@ -30,3 +30,17 @@ export const register = async (username: string, email: string, password: string
   });
   return handleResponse(response);
 };
+
+export async function logout() {
+  const response = await fetch('/logout', {
+      method: 'POST',
+      credentials: 'include',
+  });
+
+  if (!response.ok) {
+      throw new Error('Failed to log out');
+  }
+
+  return response.json();
+}
+
