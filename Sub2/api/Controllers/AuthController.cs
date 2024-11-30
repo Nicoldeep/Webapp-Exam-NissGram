@@ -28,14 +28,19 @@ public class AuthController : ControllerBase
         return Ok("Test endpoint working.");
     }
 
-    [HttpGet("check-auth")]
-    public IActionResult CheckAuth()
+    [HttpGet("isauthenticated")]
+    public IActionResult GetAuthenticationStatus()
     {
-        if (User.Identity?.IsAuthenticated ?? false)
+        if (User.Identity == null || !User.Identity.IsAuthenticated)
         {
-            return Ok(new { message = "User is authenticated" });
+            return Unauthorized(new { isAuthenticated = false, user = (string?)null });
         }
-        return Unauthorized(new { message = "User is not authenticated" });
+
+        return Ok(new
+        {
+            isAuthenticated = true,
+            user = User.Identity.Name
+        });
     }
 
     [AllowAnonymous]

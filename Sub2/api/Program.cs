@@ -6,7 +6,7 @@ using Serilog;
 using NissGram.DAL;
 using NissGram.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,9 +35,6 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 // Configure authentication cookies
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.None; // For cross-origin cookies
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Enforce HTTPS in production
-    options.Cookie.HttpOnly = true; // Prevent JavaScript access to cookies
     options.LoginPath = "/api/auth/login";
     options.AccessDeniedPath = "/api/auth/accessdenied";
     options.LogoutPath = "/api/auth/logout";
@@ -73,10 +70,9 @@ builder.Services.AddControllersWithViews(config =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
-        builder.WithOrigins("http://localhost:3000") // Frontend URL
+        builder.AllowAnyOrigin() // Consider restricting this in production
                .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials()); // Support cookies
+               .AllowAnyHeader());
 });
 
 // Add Swagger/OpenAPI
@@ -96,6 +92,7 @@ builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
     });
 
 var app = builder.Build();
@@ -111,23 +108,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
-app.UseCors("CorsPolicy"); // Apply CORS policy
+app.UseCors("CorsPolicy");
 app.UseAuthentication(); // Enable ASP.NET Identity authentication
 app.UseAuthorization(); // Enable authorization
 
-// Map logout endpoint
-app.MapPost("/logout", async (SignInManager<User> signInManager) =>
-{
-    await signInManager.SignOutAsync();
-    return Results.Ok();
-}).RequireAuthorization();
 
-// Map pingauth endpoint
-app.MapGet("/pingauth", (ClaimsPrincipal user) =>
-{
-    var email = user.FindFirstValue(ClaimTypes.Email);
-    return Results.Json(new { email });
-}).RequireAuthorization();
 
 // Map routes
 app.MapControllers(); // Attribute-based API routes

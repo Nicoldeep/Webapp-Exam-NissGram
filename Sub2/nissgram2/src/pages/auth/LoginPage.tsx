@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './../../styles/auth.css';
 import NissGramLogo from './../../assets/images/Niss.png';
 import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,6 @@ const LoginPage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Viktig for å tillate cookies
         body: JSON.stringify({
           username: formData.usernameOrEmail,
           password: formData.password,
@@ -42,11 +42,11 @@ const LoginPage: React.FC = () => {
         const responseData = await response.json();
         console.log('Login successful', responseData);
 
-        // Videresend til hjemmesiden
+        // Oppdater global autentiseringstilstand og videresend til hovedsiden
         navigate('/');
       } else {
         const errorData = await response.json();
-        setError(errorData.message || 'Login failed. Please try again.' + response);
+        setError(errorData.message || 'Login failed. Please try again.');
       }
     } catch (err) {
       setError('Unable to connect to the server. Please try again later.');
@@ -57,7 +57,6 @@ const LoginPage: React.FC = () => {
   return (
     <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '80vh' }}>
       <div className="row w-100" style={{ maxWidth: '800px', transform: 'translateY(-10%)' }}>
-        {/* Left Column with Logo */}
         <div className="col-md-5 d-flex align-items-center" style={{ paddingRight: '20px' }}>
           <img
             src={NissGramLogo}
@@ -66,8 +65,6 @@ const LoginPage: React.FC = () => {
             style={{ maxHeight: '400px' }}
           />
         </div>
-
-        {/* Right Column with Login Form */}
         <div className="col-md-6 p-4">
           <h2 className="text-center mb-4">Log in</h2>
           <form onSubmit={handleLogin}>
@@ -112,7 +109,6 @@ const LoginPage: React.FC = () => {
               </label>
             </div>
 
-            {/* Error Message */}
             {error && <p className="text-danger">{error}</p>}
 
             <button type="submit" className="btn btn-primary w-100 mb-3">

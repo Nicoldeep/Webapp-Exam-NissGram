@@ -1,6 +1,6 @@
 import API_URL from '../apiConfig';
 
-const headers = {
+const headers = { 
   'Content-Type': 'application/json',
 };
 

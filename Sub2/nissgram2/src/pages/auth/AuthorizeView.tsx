@@ -1,26 +1,34 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const UserContext = createContext({});
-
+// AuthorizeView-komponent
 function AuthorizeView({ children }: { children: React.ReactNode }) {
-    const [authorized, setAuthorized] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetch("/api/auth/pingauth", { credentials: "include" })
-        .then((res) => {
-            if (res.ok) setAuthorized(true);
-            else setAuthorized(false);
-        })
-        .catch(() => setAuthorized(false));
-}, []);
+    async function checkAuth() {
+      try {
+        const response = await fetch('/api/auth/isauthenticated', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const result = await response.json();
+        setAuthenticated(result.isAuthenticated);
+      } catch {
+        setAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    }
+    checkAuth();
+  }, []);
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-if (!authorized) {
-    return <Navigate to="/login" />;
-}
-
-return <>{children}</>;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 }
 
 export default AuthorizeView;

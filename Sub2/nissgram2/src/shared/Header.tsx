@@ -28,30 +28,25 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed-header">
-        <a href="/" >
-            <img src={Logo} alt="NissGram Logo" className="navbar-brand" style={{height: "70px", padding: "5px"}}/>
+      <a href="/" >
+        <img src={Logo} alt="NissGram Logo" className="navbar-brand" style={{ height: "70px", padding: "5px" }} />
+      </a>
+      <nav className="icon-bar">
+        <a href="/profile" className="nav-link">
+          <div className="profile-container circle">
+            <img src={ProfileIcon} className="profile-picture" alt="Profile " />
+          </div>
         </a>
-
-        <nav className="icon-bar">
-            <a href="/profile" className="nav-link">
-                <div className="profile-container circle">
-                    <img src={ProfileIcon} className="profile-picture" alt="Profile "/>
-                </div>
-            </a>
-            <a href="/" className="nav-link">
-                <img src={HomeIcon} style={{height: "40px", padding: "5px"}} alt="Home "/>
-            </a>
-            <a href="/createPost" className="nav-link">
-                <img src={AddIcon} style={{height: "40px", padding: "5px"}} alt="Add Post "/>
-            </a>
-            <div className="d-inline nav-link" >
-                <button type="submit" onClick={handleLogout} className="nav-link text-white p-0 border-0 bg-transparent">
-                    <a href="/logout">
-                        <img src={LogoutIcon} style={{height: "40px", padding: "5px"}} alt="Logout "/>
-                    </a>
-                </button>
-            </div>
-        </nav>
+        <a href="/" className="nav-link">
+          <img src={HomeIcon} style={{ height: "40px", padding: "5px" }} alt="Home " />
+        </a>
+        <a href="/createPost" className="nav-link">
+          <img src={AddIcon} style={{ height: "40px", padding: "5px" }} alt="Add Post " />
+        </a>
+        <button type="button" className="nav-link text-white p-0 border-0 bg-transparent" onClick={handleLogout}>
+          <img src={LogoutIcon} style={{ height: "40px", padding: "5px" }} alt="Logout " />
+        </button>
+      </nav>
     </header>
   );
 };
