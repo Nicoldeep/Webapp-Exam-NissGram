@@ -63,20 +63,13 @@ const App: React.FC = () => {
                   }
             />
             <Route
-                  path="/updatePost"
+                  path="/updatePost/:postId"
                   element={
-                    <AuthorizeView>
-                    <UpdatePost
-                      postId={123}
-                      existingImgUrl= " "
-                      text="This is the current text of the post."
-                      onUpdate={(postId, updatedText, updatedImage) => {
-                        console.log("Updated Post:", { postId, updatedText, updatedImage });
-                      }}
-                    />
-                    </AuthorizeView>
+                      <AuthorizeView>
+                         <UpdatePost />
+                      </AuthorizeView>
                   }
-              />
+            />
             <Route
                   path="*"
                   element={

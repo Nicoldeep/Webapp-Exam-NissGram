@@ -6,7 +6,6 @@ import './../styles/layout.css';
 
 const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -49,17 +48,13 @@ const HomePage: React.FC = () => {
         setPosts(enrichedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchPosts();
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+
 
   return (
     <div style={{ padding: "20px" }}>

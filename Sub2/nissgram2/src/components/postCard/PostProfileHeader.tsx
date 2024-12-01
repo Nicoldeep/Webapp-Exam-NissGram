@@ -1,35 +1,36 @@
 import React from "react";
+import PostDropdown from "./PostDropdown";
+
 
 interface PostProfileHeaderProps {
   profilePicture: string;
   userName: string;
-  userProfileLink: string; // URL to the user's profile
+  userProfileLink: string;
+
 }
 
 const PostProfileHeader: React.FC<PostProfileHeaderProps> = ({
   profilePicture,
   userName,
   userProfileLink,
+
 }) => {
   return (
-    <a
-      href={"/profile"}
-      style={{ color: "inherit", textDecoration: "none" }}
-    >
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <div className="d-flex align-items-center">
-          <img
-            src={profilePicture}
-            alt="Profile Picture"
-            className="rounded-circle"
-            style={{ width: 30, height: 30 }}
-          />
-          <h5 className="card-title mb-0" style={{ marginLeft: "10px" }}>
-            {userName}
-          </h5>
-        </div>
+    <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-center">
+        <img
+          src={profilePicture}
+          alt="Profile"
+          className="rounded-circle"
+          style={{ width: "40px", height: "40px", marginRight: "10px" }}
+        />
+        <a href={userProfileLink} className="text-decoration-none text-dark">
+          {userName}
+        </a>
       </div>
-    </a>
+
+     
+    </div>
   );
 };
 

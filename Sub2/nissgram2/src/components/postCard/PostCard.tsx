@@ -1,13 +1,18 @@
 import React from "react";
 import API_URL from "../../apiConfig";
 import PostProfileHeader from "./PostProfileHeader";
-import '../../styles/postCard.css';
+import "../../styles/postCard.css";
 import PostDates from "./PostDates";
 import PostActions from "./PostActions";
-import { Post } from "../../types/post"; // Sørg for at typen Post er riktig definert.
-import { post } from "axios";
+import { Post } from "../../types/post";
+import PostDropdown from "./PostDropdown";
 
-const PostCard: React.FC<Post> = ({
+interface PostCardProps extends Post {
+  postId: number;
+  currentUserName: string;
+}
+
+const PostCard: React.FC<PostCardProps> = ({
   user,
   imgUrl = '',
   text,
@@ -15,53 +20,60 @@ const PostCard: React.FC<Post> = ({
   commentCount,
   dateCreated,
   dateUpdated,
-  onLike,
-  onCommentClick,
-  userLiked, // Passer for likes
+  userLiked,
+  postId,
+  currentUserName,
 }) => {
-  return (
-    <div className="post-card">
-      {/* Profilheader */}
-      <PostProfileHeader
-        profilePicture={user?.profilePicture || `${API_URL}/images/default-profile.png`}
-        userName={user?.userName || "Unknown"}
-        userProfileLink={`/user/${user?.userName || "unknown"}`}
-      />
+  const handleEdit = () => {
+    console.log(`Editing post with ID: ${postId}`);
+  };
 
-      {/* Postens bilde */}
+  const handleDelete = () => {
+    console.log(`Deleting post with ID: ${postId}`);
+  };
+
+  const handleCommentClick = () => {
+    console.log("Comment clicked for post:", postId);
+  };
+
+  return (
+    <div className="post-card" style={{ position: "relative", marginBottom: "20px" }}>
+      <div className="d-flex justify-content-between align-items-center">
+        <PostProfileHeader
+          profilePicture={user?.profilePicture || "/default-profile.png"}
+          userName={user?.userName || "Unknown"}
+          userProfileLink={`/user/${user?.userName || "unknown"}`}
+        />
+
+        {/* Dropdown Button - vises kun for innlogget bruker */}
+        {currentUserName === user.userName && (
+          <PostDropdown onEdit={handleEdit} onDelete={handleDelete} postId={postId} />
+        )}
+      </div>
+
       {imgUrl && (
         <img
-          src={imgUrl.startsWith('/images/postImages') ? `${API_URL}${imgUrl}` : `http://localhost:5024${imgUrl}`}
-          alt="Post image"
-          className="post-image"
+          src={imgUrl.startsWith("/images/postImages") ? `${API_URL}${imgUrl}` : `http://localhost:5024${imgUrl}`}
+          alt="Post"
+          className="img-fluid rounded"
+          style={{ marginTop: "10px" }}
         />
       )}
 
-      {/* Postens tekst */}
       <p>{text}</p>
+      <hr></hr>
 
-      {/* Datoer */}
-      <PostDates dateCreated={dateCreated} dateUpdated={dateUpdated} />
-      
-      {/* Likes og kommentarer */}
-      <div className="likes-comments-dates">
+      {/* PostDates */}
+      <PostDates dateCreated={new Date(dateCreated)} dateUpdated={new Date(dateUpdated)} />
+
+      {/* PostActions */}
       <PostActions
-      postId={user?.id}
-      userLiked={userLiked}
-      likeCount={likeCount}
-      commentCount={commentCount}
-      onLike={onLike}
-      onCommentClick={onCommentClick}
-      user={user} // Assuming 'user' is an object with required details
-      imgUrl={imgUrl}
-      text={text}
-      dateCreated={dateCreated}
-      dateUpdated={dateUpdated}
-      comments={[]} // Assuming you have comments data
-      onAddComment={() => {}} // Placeholder function
-      onDeleteComment={() => {}} // Placeholder function
-    />
-      </div>
+        postId={postId}
+        userLiked={userLiked}
+        likeCount={likeCount}
+        commentCount={commentCount}
+        onCommentClick={handleCommentClick}
+      />
     </div>
   );
 };
