@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   cursor: pointer; 
+  font-weight: bold;
   transition: transform 0.2s ease-in-out; 
 }
 
@@ -68,12 +69,7 @@
   margin-right: 5px; 
 }
 
-/* Hover effect for the text next to the icon (optional) */
-.comment-button-container span {
-  color: #555; 
-  font-weight: bold;
-  transition: color 0.2s ease-in-out;
-}
+
 
 .comment-button-container:hover span {
   color: #007bff;

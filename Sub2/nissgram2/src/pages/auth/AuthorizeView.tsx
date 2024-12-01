@@ -50,7 +50,6 @@ function AuthorizeView({ children }: { children: ReactNode }) {
 
 export function AuthorizedUser({ value }: { value: string }) {
   const user = React.useContext(UserContext);
-
   if (user && value === 'email') {
     return <>{user.email}</>;
   } else {

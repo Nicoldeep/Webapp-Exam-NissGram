@@ -8,7 +8,7 @@ import { Post } from "../../types/post"; // Sørg for at typen Post er riktig de
 
 const PostCard: React.FC<Post> = ({
   user,
-  imgUrl,
+  imgUrl = '',
   text,
   likeCount,
   commentCount,
@@ -38,14 +38,22 @@ const PostCard: React.FC<Post> = ({
 
       {/* Likes og kommentarer */}
       <div className="likes-comments-dates">
-        <PostActions
-          postId={user?.id || 0} // Sørg for at du bruker riktig ID her.
-          userLiked={userLiked} // Overfør om brukeren har likt innlegget.
-          likeCount={likeCount} // Overfør antall likes.
-          commentCount={commentCount} // Overfør antall kommentarer.
-          onLike={onLike} // Funksjon for håndtering av likes.
-          onCommentClick={onCommentClick} // Funksjon for håndtering av kommentarer.
-        />
+      <PostActions
+      postId={user?.id || 0}
+      userLiked={userLiked}
+      likeCount={likeCount}
+      commentCount={commentCount}
+      onLike={onLike}
+      onCommentClick={onCommentClick}
+      user={user} // Assuming 'user' is an object with required details
+      imgUrl={imgUrl}
+      text={text}
+      dateCreated={dateCreated}
+      dateUpdated={dateUpdated}
+      comments={[]} // Assuming you have comments data
+      onAddComment={() => {}} // Placeholder function
+      onDeleteComment={() => {}} // Placeholder function
+    />
       </div>
     </div>
   );
