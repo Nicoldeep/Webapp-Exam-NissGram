@@ -44,8 +44,10 @@ const RegisterPage: React.FC = () => {
     } catch (err) {
         if (err instanceof Error) {
             setError(err.message);
+            navigate('/register');
         } else {
             setError('An unexpected error occurred.');
+            navigate('/register');
         }
     } finally {
         setLoading(false);

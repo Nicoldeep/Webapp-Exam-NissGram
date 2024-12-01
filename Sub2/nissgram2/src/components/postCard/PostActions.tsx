@@ -3,6 +3,7 @@ import API_URL from "../../apiConfig";
 import { Modal } from 'react-bootstrap';
 import PostPopup from "./PostPopup";
 import PostProfileHeader from "./PostProfileHeader"
+import './../../styles/popUp.css';
 
 // Make sure PostPopupProps are imported if they're defined in another file
 interface PostActionsProps {
@@ -54,7 +55,7 @@ const PostActions: React.FC<PostActionsProps> = ({
   const toggleModal = () => setShowModal(!showModal);
   const [userLikedd, setUserLiked] = useState(userLiked);
   const [likeCountt, setLikeCount] = useState(likeCount);
-
+  
   const handleLike = () => {
     setUserLiked(!userLiked);
     setLikeCount(userLiked ? likeCountt - 1 : likeCountt + 1);
@@ -72,7 +73,7 @@ const PostActions: React.FC<PostActionsProps> = ({
         <span>{commentCount}</span>
       </button>
 
-      <Modal show={showModal} onHide={toggleModal} centered class="modal-dialog modal-xl" >
+      <Modal show={showModal} onHide={toggleModal} centered className="modal-xl"  >
         <Modal.Header closeButton >
           <Modal.Title>
           <div >

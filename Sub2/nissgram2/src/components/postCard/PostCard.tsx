@@ -5,6 +5,7 @@ import '../../styles/postCard.css';
 import PostDates from "./PostDates";
 import PostActions from "./PostActions";
 import { Post } from "../../types/post"; // Sørg for at typen Post er riktig definert.
+import { post } from "axios";
 
 const PostCard: React.FC<Post> = ({
   user,
@@ -41,11 +42,11 @@ const PostCard: React.FC<Post> = ({
 
       {/* Datoer */}
       <PostDates dateCreated={dateCreated} dateUpdated={dateUpdated} />
-
+      
       {/* Likes og kommentarer */}
       <div className="likes-comments-dates">
       <PostActions
-      postId={user?.id || 0}
+      postId={user?.id}
       userLiked={userLiked}
       likeCount={likeCount}
       commentCount={commentCount}

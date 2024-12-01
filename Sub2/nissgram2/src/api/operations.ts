@@ -53,7 +53,14 @@ export const checkAuthentication = async () => {
 
 // Flere operations/calls mot backend!
 
+export const addComment = async (commentData: any) => {
+    return callApi('/CommentAPI/add', 'POST', commentData);
+};
 
+// api.js eller et tilsvarende sted for API-kall
+export const deleteComment = async (commentId: any) => {
+    return callApi(`/CommentAPI/delete/${commentId}`, 'DELETE');
+};
 
 //API operation to call the POST /api/UserAPI/update endpoint 
 export const updateUserProfile = async (userDetails: any) => {

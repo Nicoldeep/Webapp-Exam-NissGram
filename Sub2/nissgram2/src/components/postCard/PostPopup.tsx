@@ -1,6 +1,24 @@
 import React from "react";
 import PostDates from "./PostDates";
 import PostActions from "./PostActions";
+import API_URL from "../../apiConfig";
+import './../../styles/popUp.css';
+import { post } from "axios";
+import { useState } from "react";
+import { addComment, deleteComment} from "./../../api/operations";
+
+interface CommentUser{
+  userName: string;
+  profilePicture: string;
+}
+
+interface Comment{
+  commentId: number;
+  text: string;
+  dateCommented: string;
+  user: CommentUser; 
+}
+
 
 interface PostPopupProps {
   postId: number;
@@ -42,24 +60,64 @@ const PostPopup: React.FC<PostPopupProps> = ({
   onClose,
   onCommentClick,
 })  => {
+
+  const [newComment, setNewComment] = useState('');
+  const handleAddComment = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!newComment.trim()) return;
+    const result = await addComment({
+      postId: postId,
+      text: newComment,
+      username: user.userName, // This should match the backend expected field
+      dateCommented: new Date().toISOString(),
+    });
+
+    console.log(newComment, user.userName, new Date().toISOString(),)
+
+    if (result.error) {
+      console.error('Failed to add comment:', result.error);
+    } else {
+      setNewComment('');
+      // Push new comment to comments array to update UI
+      comments.push({
+        commentId: result.commentId, // Make sure your API returns the new ID
+        text: newComment,
+        dateCommented: new Date().toISOString(),
+        user: { userName: user.userName, profilePicture: user.profilePicture }
+      });
+      // Call any additional state updates or side-effects here
+    }
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    const result = await deleteComment(commentId);
+    if (result.error) {
+      console.error('Failed to delete comment:', result.error);
+    } else {
+      // Filter out the deleted comment from the local state to update UI
+      const updatedComments = comments.filter(comment => comment.commentId !== commentId);
+      comments = updatedComments; // Assuming this updates your state correctly
+    }
+  };
+  
   return (
-    <div className="post-popup">
+    <div className="post-popup modal-content">
       
-      <div className="modal-body d-flex flex-column">
+      <div className="modal-body d-flex">
           {/* Post Image or Text */}
         <div className="left pe-3">
-          <div className="mb-3">
+         
             {imgUrl ? (
               <img
-                src={imgUrl}
-                alt="Post"
+                src={imgUrl.startsWith('/images/postImages') ? `${API_URL}${imgUrl}` : `http://localhost:5024${imgUrl}`}
+                alt="Post image"
                 className="img-fluid rounded mb-3"
-                style={{ maxHeight: "600px" }}
+                style={{ maxHeight: "400px" }}
               />
-            ) : (
+            ): (
               <p className="font-italic">{text}</p>
             )}
-          </div>
+          
           <div className="likes-comments-dates">
               <PostActions
                 postId={user?.id || 0}
@@ -83,79 +141,45 @@ const PostPopup: React.FC<PostPopupProps> = ({
           </div>
         </div>
 
-        {/* Post Actions */}
-        <div className="d-flex align-items-center mb-3">
-          <button
-            className={`btn btn-sm ${userLiked ? "btn-danger" : "btn-outline-danger"} me-3`}
-            onClick={onLike}
-          >
-            {userLiked ? "Unlike" : "Like"} ({likeCount})
-          </button>
-          <span className="text-muted">Comments: {commentCount}</span>
-        </div>
-
-        {/* Comments Section */}
-        <div>
+          
+        {/* R Post Actions */}
+        <div className="right">
+          <h5 className="mb-3">{imgUrl ? " " : "Note"}</h5>
           <h6>Comments</h6>
-          <div className="comments-list mb-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {comments.length > 0 ? (
-              comments.map((comment) => (
-                <div key={comment.commentId} className="d-flex align-items-start mb-3">
-                  <img
-                    src={comment.user.profilePicture}
-                    alt={`${comment.user.userName}'s profile`}
-                    className="rounded-circle me-2"
-                    style={{ width: "30px", height: "30px" }}
-                  />
+          <div className="comments-list" style={{ maxHeight: "200px", overflowY: "auto" }}>
+            {comments.map((comment) => (
+              <div key={comment.commentId} className="d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center">
+                  <img src={comment.user.profilePicture} alt={`${comment.user.userName}'s profile`} className="rounded-circle me-2" style={{ width: "30px", height: "30px" }} />
                   <div>
                     <strong>{comment.user.userName}</strong>
-                    <p className="mb-1">{comment.text}</p>
-                    <small className="text-muted">{new Date(comment.dateCommented).toLocaleString()}</small>
-                    {comment.user.userName === user.userName && (
-                      <button
-                        className="btn btn-link text-danger p-0 ms-3"
-                        onClick={() => onDeleteComment(comment.commentId)}
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <p>{comment.text}</p>
+                    <small>{new Date(comment.dateCommented).toLocaleString()}</small>
                   </div>
                 </div>
-              ))
-            ) : (
-              <p className="text-muted">No comments yet. Be the first to comment!</p>
-            )}
+                {comment.user.userName === user.userName && (
+                  <button onClick={() => handleDeleteComment(comment.commentId)} className="btn btn-link text-danger p-0">
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
-          {/* Add Comment */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target as HTMLFormElement);
-              const commentText = formData.get("commentText")?.toString().trim();
-              if (commentText) onAddComment(commentText);
-              (e.target as HTMLFormElement).reset();
-            }}
-          >
-            <div className="input-group">
+        {/*Add comment */}
+          <form onSubmit={handleAddComment}>
               <input
                 type="text"
-                name="commentText"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
                 className="form-control"
                 placeholder="Write a comment..."
                 required
               />
-              <button className="btn btn-primary" type="submit">
-                Post
-              </button>
-            </div>
-          </form>
-        </div>
+              <button type="submit" className="btn btn-primary">Post</button>
+            </form>
       </div>
-      <div className="modal-footer text-muted">
-        <small>Posted: {new Date(dateCreated).toLocaleString()}</small>
-        <small className="ms-auto">Last updated: {new Date(dateUpdated).toLocaleString()}</small>
-      </div>
+    </div>
     </div>
   );
 };
