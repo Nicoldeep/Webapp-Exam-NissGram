@@ -7,7 +7,7 @@ interface PostDatesProps {
 
 const PostDates: React.FC<PostDatesProps> = ({ dateCreated, dateUpdated }) => {
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "long",
       year: "numeric",
