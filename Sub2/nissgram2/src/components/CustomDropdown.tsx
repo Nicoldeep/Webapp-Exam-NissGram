@@ -22,7 +22,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ icon, menuItems }) => {
           <li key={index}>
             <button
               type="button"
-              className={`dropdown-item ${index === 1 ? 'text-danger' : ''}`} // Add red color for the second button
+              className={`dropdown-item ${index === 1 ? 'text-danger' : ''}`}
               onClick={item.action}
             >
               {item.label}

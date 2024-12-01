@@ -28,7 +28,13 @@ const PostCard: React.FC<Post> = ({
       />
 
       {/* Postens bilde */}
-      {imgUrl && <img src={imgUrl} alt="Post image" className="post-image" />}
+      {imgUrl && (
+        <img
+          src={imgUrl.startsWith('/images/postImages') ? `${API_URL}${imgUrl}` : `http://localhost:5024${imgUrl}`}
+          alt="Post image"
+          className="post-image"
+        />
+      )}
 
       {/* Postens tekst */}
       <p>{text}</p>

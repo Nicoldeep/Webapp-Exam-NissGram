@@ -29,6 +29,13 @@ async function callApi(endpoint: string, method: string, body?: any) {
 }
 
 // API operations
+
+// API operation for creating a post
+export const createPost = async (postDetails: { text: string; imgUrl?: string }) => {
+    return callApi('/posts/create', 'POST', postDetails);
+};
+
+
 //API operation for login
 export const login = async (username: string, password: string) => {
     return callApi('/auth/login', 'POST', { username, password });
@@ -45,3 +52,15 @@ export const checkAuthentication = async () => {
 };
 
 // Flere operations/calls mot backend!
+
+
+
+//API operation to call the POST /api/UserAPI/update endpoint 
+export const updateUserProfile = async (userDetails: any) => {
+    return callApi('/userapi/update', 'POST', userDetails);
+  };
+  
+//API function to fetch the current users profile
+export const fetchCurrentUser = async () => {
+    return callApi('/userapi/current', 'GET');
+};

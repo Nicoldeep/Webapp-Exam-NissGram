@@ -1,27 +1,30 @@
 import React, { useState } from "react";
+import { createPost } from "../../api/operations"; // Import the API operation
 import "../../styles/layout.css";
 import "../../styles/createPost.css";
 
 const CreatePost: React.FC = () => {
-  const [text, setText] = useState<string>(""); // For teksten
-  const [image, setImage] = useState<File | null>(null); // For bildet
-  const [preview, setPreview] = useState<string | null>(null); // For forhåndsvisning
-  const [error, setError] = useState<string | null>(null); // For feilmeldinger
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // For å vise lastestatus
+  const [text, setText] = useState<string>(""); // For text content
+  const [image, setImage] = useState<File | null>(null); // Endrer typen til File | null
+  const [preview, setPreview] = useState<string | null>(""); // For image preview
+  const [error, setError] = useState<string | null>(null); // For error messages
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // For loading state
 
-  // Håndter bildeopplastning og forhåndsvisning
+  // Handle image upload and preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
+      setImage(file); // Setter `image` som en fil
       const reader = new FileReader();
       reader.onload = () => {
-        setPreview(reader.result as string);
+        setPreview(reader.result as string); // Forhåndsviser bildet
       };
       reader.readAsDataURL(file);
     }
   };
+  
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -33,28 +36,29 @@ const CreatePost: React.FC = () => {
   
     setIsSubmitting(true);
   
-    // Opprett FormData for å håndtere fil og tekst
+    // Opprett FormData for å sende tekst og bilde
     const formData = new FormData();
-    formData.append("text", text);
+    formData.append("Text", text); // Må samsvare med backend-feltet "Text"
     if (image) {
-      formData.append("uploadimage", image); // Bruk riktig felt som backend forventer
+      formData.append("uploadImage", image); // Må samsvare med backend-feltet "uploadImage"
     }
   
     try {
       const response = await fetch("http://localhost:5024/api/PostAPI/create", {
         method: "POST",
-        body: formData, // Send FormData direkte
+        body: formData,
+        credentials: "include", // Inkluderer autentiseringstokenet
       });
   
       if (!response.ok) {
-        throw new Error("Failed to create post.");
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || "Failed to create post.");
       }
   
-      // Tilbakestill skjema ved suksess
+      // Rydd opp skjema ved suksess
       setText("");
       setImage(null);
       setPreview(null);
-      setError(null);
       alert("Post created successfully!");
     } catch (err: any) {
       setError(err.message || "Something went wrong.");
@@ -62,6 +66,7 @@ const CreatePost: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  
   
 
   return (

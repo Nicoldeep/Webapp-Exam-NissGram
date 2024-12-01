@@ -1,23 +1,29 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import CustomDropdown from './CustomDropdown'; // Correct the path as needed
+import { useNavigate } from 'react-router-dom';
+import CustomDropdown from './CustomDropdown';
 import '../styles/profilePage.css';
 import API_URL from '../apiConfig';
 
-const ProfileHeader: React.FC = () => {
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+interface ProfileHeaderProps {
+  userData: {
+    username: string;
+    description: string;
+    pictureCount: number;
+    noteCount: number;
+  };
+}
+
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userData }) => {
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear any user-related data (e.g., tokens, user info)
-    localStorage.removeItem('authToken'); // Example of clearing a token from local storage
-
-    // Redirect to the login page
-    navigate('/login');
+    localStorage.removeItem('authToken'); // Clear user token
+    navigate('/login'); // Redirect to login
   };
 
   const menuItems = [
-    { label: 'Update Profile', action: () => navigate('/update-profile') }, // Navigate to the update profile page
-    { label: 'Log Out', action: handleLogout }, // Call handleLogout for the log out action
+    { label: 'Update Profile', action: () => navigate('/update-profile') },
+    { label: 'Log Out', action: handleLogout }
   ];
 
   return (
@@ -26,25 +32,26 @@ const ProfileHeader: React.FC = () => {
         {/* Profile Picture */}
         <div className="d-flex align-items-center">
           <img
-            src={`${API_URL}/images/profile_image_default.png`} // Use the default profile picture
+            src={`${API_URL}/images/profile_image_default.png`}
             alt="Profile"
             className="rounded-circle me-5"
             style={{ width: '100px', height: '100px' }}
           />
           <div>
             {/* Username */}
-            <div className="username-wrapper">
-              <h2 className="mb-4" style={{ color: '#000' }}> {/* Set text color to black */}
-                UserName
-              </h2>
-            </div>
+            <h2 className="mb-4" style={{ color: '#000' }}>
+              {userData.username || 'Guest'}
+            </h2>
+
             {/* Picture and Note Count */}
-            <p className="mb-4 fs-5" style={{ color: '#000' }}> {/* Set text color to black */}
-              <span>0 Pictures</span> | <span>0 Notes</span>
+            <p className="mb-4 fs-5" style={{ color: '#000' }}>
+              <span>{userData.pictureCount} Pictures</span> |{' '}
+              <span>{userData.noteCount} Notes</span>
             </p>
+
             {/* Description */}
-            <p className="fs-6 description-text" style={{ color: '#000' }}> {/* Set text color to black */}
-              This is a placeholder for the user description. It should wrap and adjust to the frame width.
+            <p className="fs-6 description-text" style={{ color: '#000' }}>
+              {userData.description}
             </p>
           </div>
         </div>

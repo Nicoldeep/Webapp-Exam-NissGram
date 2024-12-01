@@ -82,7 +82,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
         <div
           style={{
             position: 'absolute',
-            top: '89%',
+            top: '85%',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 10,

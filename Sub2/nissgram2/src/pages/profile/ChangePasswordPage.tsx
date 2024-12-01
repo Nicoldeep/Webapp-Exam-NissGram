@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePasswordPage: React.FC = () => {
+  const navigate = useNavigate(); // To handle navigation
   const [passwordDetails, setPasswordDetails] = useState({
     currentPassword: '',
     newPassword: '',
@@ -22,11 +24,11 @@ const ChangePasswordPage: React.FC = () => {
     }
     console.log('Password updated:', passwordDetails);
     alert('Your password has been successfully updated!');
+    navigate('/profile'); // Redirect to profile after successful update
   };
 
   const handleCancel = () => {
-    console.log('Password change canceled.');
-    alert('Password change has been canceled!');
+    navigate('/profile'); // Redirect to profile without saving
   };
 
   return (
@@ -96,7 +98,7 @@ const ChangePasswordPage: React.FC = () => {
           <button
             type="button"
             onClick={handleCancel}
-            className="btn btn-danger btn-lg"
+            className="btn btn-secondary btn-lg" // Matches the style of cancel in UpdateUserPage
             style={{
               padding: '10px 20px',
               borderRadius: '5px',

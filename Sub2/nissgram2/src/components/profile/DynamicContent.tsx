@@ -27,4 +27,5 @@ const DynamicContent: React.FC<DynamicContentProps> = ({ section, data }) => {
   }
 };
 
+
 export default DynamicContent;
