@@ -109,7 +109,7 @@ const RegisterPage: React.FC = () => {
   return (
     <div className="container" id="register">
       <form onSubmit={handleSubmit} id="registerForm" method="post" encType="multipart/form-data">
-        <h2 className="text-center mb-4" style={{paddingTop: "2rem"}}>Register</h2>
+        <h2 className="text-center mb-4" style={{paddingTop: "2rem", color:"#000"}}>Register</h2>
       
         <div className="mb-1">
           <label htmlFor="username" className="form-label fs-5 fw-bold">Username<span className="text-danger">*</span></label>
