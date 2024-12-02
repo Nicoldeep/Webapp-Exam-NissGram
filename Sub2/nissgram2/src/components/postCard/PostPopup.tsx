@@ -67,7 +67,27 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
     }
   } 
 
-  const formatDate = (dateString: string): string => {
+  const body = () => {
+    if (imgUrl){
+      return (
+            <img
+            src={
+              imgUrl.startsWith("/images/post_images")
+                ? `${config.BACKEND_URL}${imgUrl}`
+                : `${config.API_URL}${config.DEFAULT_IMAGE_PATH}`
+            }
+            alt="Post"
+            className="img-fluid rounded"
+            style={{ marginTop: "10px" }}
+          />
+      )
+    }
+    else{
+      return post.text
+    }
+  }
+
+    const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is 0-indexed
@@ -81,21 +101,14 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
   return (
     <div className="post-popup modal-body d-flex">
       <div className="left pe-3">
-        
-        {imgUrl && (
-          <img
-            src={
-              imgUrl.startsWith("/images/postImages")
-                ? `${config.BACKEND_URL}${imgUrl}`
-                : `${config.API_URL}${config.DEFAULT_IMAGE_PATH}`
-            }
-            alt="Post"
-            className="img-fluid rounded"
-            style={{ marginTop: "10px" }}
-          />
-        )}
+        {body()}
 
+
+        <div>
+          <strong > {title()}</strong>
+        </div>
         <div className='likes-comments-dates'>
+
 
           <p>{likeCount} Likes</p>
           <p>{commentCount} Comments</p>
@@ -108,65 +121,55 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
       </div>
 
       <div className="right">
-        <div>
-          {title()}
-        </div>
-      <h6>Comments</h6>
-        {comments.map((comment) => {
-
-        const renderComment = (comment:any) => {
-            console.log(comment)
-            return (
-            <div key={comment.commentId} className="list-group" style={{maxHeight:"23rem", overflowY:"auto",width:"100%"}}>
-              <div className='comments-container list-group-item d-flex justify-content-between align-items-center d-flex align-items-center mb-2 kmt'>
-                
-                
-                {imgUrl && (
+  <h6>Comments</h6>
+  <div className="comments-list">
+    {comments.map((comment) => {
+      const renderComment = (comment: any) => {
+        console.log(comment);
+        return (
+          <div key={comment.commentId} className="comment-box">
+            <div className="comment-header d-flex align-items-center">
+              {   imgUrl && (
                 <img
                   src={
                     imgUrl.startsWith("/images/postImages")
                       ? `${config.API_URL}${imgUrl}`
                       : `http://localhost:5024${imgUrl}`
                   }
-                  alt="Post"
-                  className="rounded-circle"
-                  style={{ width: "30px", height: "30px", marginRight: "10px" }}
-                    /> 
-                )}
-
-                <div> 
-                <strong>{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}:</strong> </div> 
-                
-                <div> {comment.text} </div> <br/>
-
-                <div>             
-                <small className="text-muted">{formatDate(comment.dateCommented)}</small></div><br/>
-                <br/><br/>
-                {currentUser && comment.simpleUser?.userName === currentUser.username && (
-                  <button onClick={() => handleDeleteComment(comment.commentId)} className="btn btn-link text-danger p-0">
-                    <i className="fas fa-trash-alt"></i>
-                  </button>
-                )}
-              </div>             
+                  alt="User"
+                  className="rounded-circle comment-avatar"
+                />
+              )}
+              <strong className="comment-username">{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}</strong>
             </div>
-            );
-          };
-              return renderComment(comment);
-          })}
+            <div className="comment-body">
+              <strong>{comment.text}</strong>
+              <small className="text-muted">{formatDate(comment.dateCommented)}</small>
+              {currentUser && comment.simpleUser?.userName === currentUser.username && (
+                <button onClick={() => handleDeleteComment(comment.commentId)} className="btn btn-link text-danger p-0 comment-delete">
+                  <i className="fas fa-trash-alt"></i>
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      };
+      return renderComment(comment);
+    })}
+  </div>
 
-          <form onSubmit={handleAddComment}>
-          <input
-            type="text"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment..."
-            required
-            className='inputKmt form-control'
-          /> <br/>
-          
-          <button className="btn btn-primary postComment" type="submit">Post</button>
-        </form>
-      </div>
+  <form onSubmit={handleAddComment} className="comment-form">
+    <input
+      type="text"
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+      placeholder="Write a comment..."
+      required
+      className="form-control"
+    />
+    <button className="btn btn-primary mt-2">Post</button>
+  </form>
+    </div>
     </div>
   );
 };

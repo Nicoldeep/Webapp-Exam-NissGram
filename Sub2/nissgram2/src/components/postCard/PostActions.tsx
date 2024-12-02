@@ -27,6 +27,9 @@ const PostActions: React.FC<PostActionsProps> = ({ post }) => {
       try {
         const data: PostDetails = await getPostDetails(postId); // Fetch full post details
         setPostDetails(data); // Set PostDetails data
+        if(simpleUser.profilePicture == null || simpleUser.profilePicture == "string"){
+          simpleUser.profilePicture =  "/images/profile_pictures/profile_image_default.png";
+        }
       } catch (err) {
         console.error("Error fetching post details:", err);
         setError("Failed to load post details.");
