@@ -2,6 +2,8 @@ import React from 'react';
 import config from '../apiConfig';
 import './../styles/layout.css';
 import { useNavigate } from 'react-router-dom';
+import { fetchCurrentUser } from './../api/operations';
+import { useEffect } from 'react';
 
 const Sidebar: React.FC = () => {
     const navigate = useNavigate();
@@ -29,6 +31,21 @@ const Sidebar: React.FC = () => {
           console.error('Logout error:', error);
         }
       };
+
+    const fetchUserData = async () => {
+        const currentUser = await fetchCurrentUser();
+        if (currentUser.error) {
+          console.error(currentUser.error);
+        } else {
+          console.log('Current User:', currentUser);
+        }
+      };
+      
+      useEffect(() => {
+        fetchUserData();
+      }, []);
+
+
 
   return (
     <div className="d-flex">
