@@ -77,8 +77,8 @@ export const createPost = async (formData: FormData) => {
     return callApi(Post.CREATE_POST, 'POST', formData, true);
 };
 
-export const deletePost = async (postId: string) => {
-    return callApi(Post.DELETE_POST.replace('{id}', postId), 'DELETE');
+export const deletePost = async (postId: number) => {
+    return callApi(Post.DELETE_POST.replace('{id}', postId.toString()), 'DELETE');
 };
 
 export const updatePost = async (postId: string, updatedDetails: any) => {

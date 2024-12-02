@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {deletePost} from "./../../api/operations"
 
 interface PostDropdownProps {
   postId: number;
@@ -17,29 +18,17 @@ const PostDropdown: React.FC<PostDropdownProps> = ({ onDelete, postId }) => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      try {
-        const response = await fetch(
-          `http://localhost:5024/api/PostAPI/delete/${postId}`,
-          {
-            method: "DELETE",
-            credentials: "include", // Send cookies eller annen autentisering
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to delete the post.");
+           try {
+            const response = await deletePost(postId); // Kaller deletePost-funksjonen fra operations
+            if (response.error) {
+                throw new Error(response.error); // Kaster en feil hvis response har en error
+            }
+            onDelete(); // Kaller `onDelete` for å oppdatere UI etter sletting
+            window.location.reload(); // Oppdaterer siden for å reflektere endringene
+        } catch (error: any) {
+            console.error("Error deleting post:", error.message || error);
         }
-
-        alert("Post deleted successfully!");
-        onDelete(); // Kaller `onDelete` for å oppdatere UI etter sletting
-        window.location.reload(); // Oppdaterer siden for å reflektere endringene
-      } catch (error: any) {
-        console.error("Error deleting post:", error.message || error);
-        alert("Failed to delete the post. Please try again.");
-      }
-    }
-  };
+};
 
   return (
     <div className="dropdown" style={{ position: "absolute", right: 20, top: 10 }}>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './../../styles/auth.css'; 
 import { register, login } from './../../api/operations';
 
 const RegisterPage: React.FC = () => {

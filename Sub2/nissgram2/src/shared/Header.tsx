@@ -2,33 +2,24 @@ import React from 'react';
 import config from '../apiConfig';
 import './../styles/layout.css';
 import { useNavigate } from 'react-router-dom';
+import { logout } from './../api/operations';
+import { useState} from 'react';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
 
     const handleLogout = async (event: React.MouseEvent) => {
-        event.preventDefault();
-    
-        try {
-          const response = await fetch('http://localhost:5024/api/auth/logout', {
-            method: 'POST',
-            credentials: 'include', // Ensure cookies are sent
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (response.ok) {
-            console.log('Logged out successfully');
-            // Optionally clear user context or local storage here
-            navigate('/login'); // Redirect to login after logout
-          } else {
-            console.error('Failed to log out');
-          }
-        } catch (error) {
+      event.preventDefault();
+      try {
+          await logout(); // Use the new logout function
+          navigate("/login");
+      }
+        catch (error) {
           console.error('Logout error:', error);
-        }
-      };
+          setError('An error occurred during logout.');
+      }
+    };
 
   return (
     <header className="fixed-header">
