@@ -127,6 +127,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
           value={username}
           onChange={(e) => onInputChange('username', e.target.value)}
           readOnly={readOnlyFields.includes('username')}
+          disabled
         />
       </div>
 
@@ -141,6 +142,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
           value={email}
           onChange={(e) => onInputChange('email', e.target.value)}
           readOnly={readOnlyFields.includes('email')}
+          disabled
         />
       </div>
 

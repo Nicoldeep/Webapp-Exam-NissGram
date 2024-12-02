@@ -29,58 +29,83 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Check if passwords match
-    if (userDetails.password !== userDetails.confirmPassword) {
+    const { firstName, lastName, about, password, confirmPassword, username, email } = userDetails;
+
+    // Frontend validation for password requirements
+    if (!password || password.length < 8) {
+        setError("Password must be at least 8 characters long.");
+        return;
+    }
+    if (!/[A-Z]/.test(password)) {
+        setError("Password must contain at least one uppercase letter (A-Z).");
+        return;
+    }
+    if (!/[0-9]/.test(password)) {
+        setError("Password must contain at least one digit (0-9).");
+        return;
+    }
+    if (!/[^\w\s]/.test(password)) {
+        setError("Password must contain at least one non-alphanumeric character.");
+        return;
+    }
+    if (password !== confirmPassword) {
         setError("Passwords do not match. Please re-enter the same password.");
         return;
     }
 
-    // Check for required fields
-    if (!userDetails.username || !userDetails.email || !userDetails.password) {
-        setError("Please fill in all required fields (Username, Email, and Password).");
+    // Required fields validation
+    if (!username || !email) {
+        setError("Username and Email are required fields.");
+        return;
+    }
+
+    // Validation for First Name
+    if (firstName && !/^[a-zA-ZæøåÆØÅ.\- ]{2,20}$/.test(firstName)) {
+        setError("First name must be letters only and between 2 to 20 characters.");
+        return;
+    }
+
+    // Validation for Last Name
+    if (lastName && !/^[a-zA-ZæøåÆØÅ.\- ]{2,20}$/.test(lastName)) {
+        setError("Last name must be letters only and between 2 to 20 characters.");
+        return;
+    }
+
+    // Validation for About Section
+    if (about && about.length > 500) {
+        setError("The About section cannot exceed 500 characters.");
         return;
     }
 
     setLoading(true);
-    setError(''); // Clear any previous error
+    setError('');
 
     try {
         const registerCall = await register(userDetails);
 
         if (!registerCall.error) {
-            // Perform the login immediately after successful registration
-            const loginCall = await login(userDetails.username, userDetails.password);
+            const loginCall = await login(username, password);
 
             if (!loginCall.error) {
-                setError(''); // Clear any existing error
+                setError('');
                 navigate('/'); // Navigate to the home page
             } else {
-                setError(`Login failed: ${loginCall.error}. Please try logging in manually.`);
+                setError("Registration succeeded, but login failed. Please try logging in manually.");
             }
         } else {
-            // Check specific error codes or messages from the backend
-            if (registerCall.errorResponse.includes("username")) {
-                setError("The username is already taken. Please choose another one.");
-            } else if (registerCall.errorResponse.includes("email")) {
-                setError("The email is already registered. Please use a different email or log in.");
-            } else {
-                setError(`Registration failed: ${registerCall.errorResponse}`);
-            }
+            setError("Registration failed due to a server error. Please check your details and try again.");
         }
     } catch (err) {
         if (err instanceof Error) {
-            if (err.message.includes("Network Error")) {
-                setError("Unable to connect to the server. Please check your internet connection.");
-            } else {
-                setError(`An unexpected error occurred: ${err.message}`);
-            }
+            setError("An error occurred: " + err.message);
         } else {
             setError("An unexpected error occurred. Please try again later.");
         }
     } finally {
-        setLoading(false); // Ensure loading is set to false in all cases
+        setLoading(false);
     }
 };
+
 
   return (
     <div className="container">

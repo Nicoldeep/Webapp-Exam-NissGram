@@ -14,19 +14,34 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Frontend-validering før vi sender forespørselen
+    if (!username.trim()) {
+      setError('Username or email is required.');
+      return;
+    }
+    if (!password.trim()) {
+      setError('Password is required.');
+      return;
+    }
+
     setLoading(true);
     try {
       const result = await login(username, password);
       if (result.error) {
-        setError(result.error);
-        throw new Error('Failed to log in');
+        // Differensier mellom feil som brukeren kan rette og generelle serverproblemer
+        if (result.error === 'Invalid username or password') {
+          setError('Invalid username or password. Please try again.');
+        } else {
+          setError('An error occurred while logging in. Try again');
+        }
       } else {
-        // Assuming the API returns some token or user data, handle it here
-        setError(''); // Clear any previous errors
-        navigate('/'); // Redirect on successful login
+        // Hvis alt er vellykket, naviger brukeren til hovedsiden
+        setError('');
+        navigate('/');
       }
     } catch (error) {
-      setError('Failed to connect to the server.');
+      setError('Failed to connect to the server. Please check your internet connection.');
     } finally {
       setLoading(false);
     }
@@ -50,11 +65,25 @@ const LoginPage: React.FC = () => {
           <h2 className="text-center mb-4">Log in</h2>
           <form onSubmit={handleLogin}>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="usernameOrEmail" placeholder="Enter your username or email" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input
+                type="text"
+                className="form-control"
+                id="usernameOrEmail"
+                placeholder="Enter your username or email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
               <label htmlFor="usernameOrEmail">Username or Email</label>
             </div>
             <div className="form-floating mb-3">
-              <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <label htmlFor="password">Password</label>
             </div>
             {error && <div className="alert alert-danger">{error}</div>}
