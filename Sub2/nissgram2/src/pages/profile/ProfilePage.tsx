@@ -88,8 +88,8 @@ const ProfilePage: React.FC = () => {
         onSectionChange={handleSectionChange}
         hideLikedPosts={!!username} // Pass a flag to hide LikedPosts for other users
       />
-      <div className="mt-4">
-        <PostsSection activeSection={activeSection} profileData={profileData} currentUser={loggedInUsername || ""} />
+      <div className="profile-posts">
+        <PostsSection activeSection={activeSection} profileData={profileData} currentUser={loggedInUsername || "" } isProfilePage={true}  />
       </div>
     </div>
   );

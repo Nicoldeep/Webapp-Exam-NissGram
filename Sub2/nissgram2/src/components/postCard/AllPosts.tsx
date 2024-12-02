@@ -61,9 +61,17 @@ const AllPosts: React.FC<{ posts: Post[] }> = ({ posts }) => {
   }
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       {updatedPosts.map((post) => (
-        <PostCard key={post.postId} post={post} currentUserName={currentUser} />
+        <div
+          key={post.postId}
+          style={{
+            width: "40%", // Each post takes 50% of the page width
+            marginBottom: "20px", // Space between posts
+          }}
+      >
+          <PostCard post={post} currentUserName={currentUser} />
+        </div>
       ))}
     </div>
   );
