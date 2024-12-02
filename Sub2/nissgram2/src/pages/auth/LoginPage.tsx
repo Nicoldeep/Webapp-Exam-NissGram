@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './../../styles/auth.css'; // CSS-stil for enhetlig design
 import './../../styles/loginRegister.css'; 
 import { useNavigate } from 'react-router-dom';
 import config from '../../apiConfig';
