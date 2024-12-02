@@ -85,8 +85,8 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
           <img
             src={
               imgUrl.startsWith("/images/postImages")
-                ? `${config.API_URL}${imgUrl}`
-                : `http://localhost:5024${imgUrl}`
+                ? `${config.BACKEND_URL}${imgUrl}`
+                : `${config.API_URL}${config.DEFAULT_IMAGE_PATH}`
             }
             alt="Post"
             className="img-fluid rounded"

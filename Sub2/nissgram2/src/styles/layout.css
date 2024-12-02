@@ -11,6 +11,11 @@
   background-color: #387478 !important;
 }
 
+body {
+  background-color: #CCCCCC !important; 
+  color: #000000; 
+}
+
 /* Profilepicture icon on the navbar */
 .profile-picture {
   width: 100%; /* Tilpass bildet til containerens bredde */
@@ -24,11 +29,9 @@
 }
 
 .nav-link:hover {
-  transform: scale(1.1); 
   filter: brightness(1.1); 
   cursor: pointer; 
 } 
-
 
 /* Main content area with margins for header and side navbar */
 .content-container {
@@ -50,15 +53,12 @@
   background-color: #f2f4f7; /* Softer color for sidebar background */
 }
 
-
-
 /* General styling for circular buttons/icons */
 .circle {
   width: 50px;
   height: 50px;
   border-radius: 50%; 
   display: flex;
-
 }
 
 /* Icon bar (alternative navbar) for smaller screens */
@@ -66,21 +66,17 @@
   display: none; 
 }
 
-
-
 /* Footer styling at the bottom of the page */
 .footer {
   position: absolute;
   bottom: 0;
   left: 80px;
   width: calc(100% - 80px);
-  background-color: #dee7e7;
+  background-color: #EEF;
   text-align: center;
   padding: 0.5rem 0;
   font-size: 0.8rem;
   line-height: 1.5rem;
-  /* border-top: 1px solid #e5e5e5; */
-  /* z-index: 1000; */
 }
 
 /* Full-width footer for login and register pages */
@@ -92,21 +88,20 @@
 
 /* Override browser-specific active/focus styles */
 .btn-primary {
-  background-color: #71a8a6 !important; /* Ensure your custom color is always applied */
+  background-color: #ffb703  !important; /* Ensure your custom color is always applied */
   border-color: #71a8a6 !important;
   color: #ffffff !important;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.4s ease;
 }
 
 .btn-primary:hover {
-  background-color: #387478 !important;
+  background-color: #fb8500 !important;
   border-color: #387478 !important;
-  transform: scale(1.05); /* Slight zoom effect */
 }
 
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #387478 !important; /* Use the same color as hover/normal */
+  background-color: #fb8500 !important; /* Use the same color as hover/normal */
   border-color: #387478 !important;
   color: #ffffff !important;
   outline: none !important; /* Remove the blue outline */
