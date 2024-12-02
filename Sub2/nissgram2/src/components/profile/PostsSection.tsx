@@ -6,9 +6,10 @@ interface PostsSectionProps {
   activeSection: "Pictures" | "Notes" | "LikedPosts";
   profileData: UserProfile;
   currentUser : string;
+  isProfilePage?: boolean; // Add a flag to differentiate between pages
 }
 
-const PostsSection: React.FC<PostsSectionProps> = ({ activeSection, profileData, currentUser }) => {
+const PostsSection: React.FC<PostsSectionProps> = ({ activeSection, profileData, currentUser, isProfilePage = false, }) => {
   const getPostsForSection = (): Post[] => {
     switch (activeSection) {
       case "Pictures":
@@ -29,9 +30,12 @@ const PostsSection: React.FC<PostsSectionProps> = ({ activeSection, profileData,
   }
 
   return (
-    <div className="row">
+    <div
+    className={isProfilePage ? "row row-cols-1 row-cols-md-3 g-4" : "row justify-content-center"}>
       {posts.map((post) => (
-        <div key={post.postId} className="col-md-4 mb-5">
+        <div
+        key={post.postId}
+        className={isProfilePage ? "col" : "col-md-6 mb-4 d-flex justify-content-center"}>
           <PostCard post={post} currentUserName={currentUser}  />
         </div>
       ))}

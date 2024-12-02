@@ -102,10 +102,8 @@ small {
     color: #333; 
     font-weight: bold;
   }
+  
 .post-card {
-  width: 50%; 
-  margin: 0 auto; 
-  margin-bottom: 40px;
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -122,19 +120,27 @@ small {
 }
 
 .likes-comments-dates {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    flex-wrap: wrap; 
-    margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .text-muted.postedDateModal {
-    text-align: right;
-    font-size: 0.9rem;
-    margin-left: auto;
+  text-align: right;
+  font-size: 0.9rem;
+  margin-left: auto;
 }
 
+
+/*.profile-post-card {
+  width: 90%; /* Larger size for profile page 
+  margin: 0 auto;
+}*/
+
+
+/*
 .comment_img_popup {
     margin-left: 5; 
     text-align: left; 

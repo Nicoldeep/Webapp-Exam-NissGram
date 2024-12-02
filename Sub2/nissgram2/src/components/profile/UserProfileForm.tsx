@@ -88,7 +88,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
           />
         </div>
 
-        <div>
+        <div style={{ position: 'relative', marginTop: '-50px' }}>
           <CustomDropdown
             icon={
               <svg

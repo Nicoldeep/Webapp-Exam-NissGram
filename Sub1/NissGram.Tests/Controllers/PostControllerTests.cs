@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using NissGram.ViewModels;
 using System.Security.Principal;
 using System.Security.Claims;
+using NissGram.DAL.Interfaces;
 
 namespace NissGram.Tests.Controllers;
 
