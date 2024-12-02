@@ -56,3 +56,14 @@
   padding: 2rem;
   word-break: break-word; /* Ensure long words break properly */
 }
+
+.postComment{
+  text-align: center;
+  text-align: center;
+}
+
+.kmt{
+  padding: 20px;
+  
+}
+

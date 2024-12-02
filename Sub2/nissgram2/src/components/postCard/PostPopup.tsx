@@ -81,6 +81,7 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
   return (
     <div className="post-popup modal-body d-flex">
       <div className="left pe-3">
+        
         {imgUrl && (
           <img
             src={
@@ -94,15 +95,16 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
           />
         )}
 
-        <div className="d-flex align-items-center mr-3 like-button-container">
-        
-        
-        <span>{likeCount}</span>
-      </div>
-        
-        <PostDates dateCreated={dateCreated} dateUpdated={dateUpdated} />
-        <p>{likeCount} Likes</p>
-        <p>{commentCount} Comments</p>
+        <div className='likes-comments-dates'>
+
+          <p>{likeCount} Likes</p>
+          <p>{commentCount} Comments</p>
+          
+          <div className='postedDateModal'>
+
+              <PostDates dateCreated={dateCreated} dateUpdated={dateUpdated} />
+          </div>
+        </div>
       </div>
 
       <div className="right">
@@ -116,9 +118,24 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
             console.log(comment)
             return (
             <div key={comment.commentId} className="list-group" style={{maxHeight:"23rem", overflowY:"auto",width:"100%"}}>
-              <div className='list-group-item d-flex justify-content-between align-items-center'>
-                <strong>{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}:</strong> {comment.text}
-                <small className="text-muted">{formatDate(comment.dateCommented)}</small>
+              <div className='list-group-item d-flex justify-content-between align-items-center d-flex align-items-center mb-2 kmt'>
+                
+                <div> </div>
+                {imgUrl && (
+                <img
+                  src={
+                    imgUrl.startsWith("/images/postImages")
+                      ? `${config.API_URL}${imgUrl}`
+                      : `http://localhost:5024${imgUrl}`
+                  }
+                  alt="Post"
+                  className="rounded-circle"
+                  style={{ width: "30px", height: "30px", marginRight: "10px" }}
+                    /> 
+                )}
+                <strong>{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}:</strong> {comment.text}<br/>
+                <small className="text-muted">{formatDate(comment.dateCommented)}</small> <br/>
+                <br/><br/>
                 {currentUser && comment.simpleUser?.userName === currentUser.username && (
                   <button onClick={() => handleDeleteComment(comment.commentId)} className="btn btn-link text-danger p-0">
                     <i className="fas fa-trash-alt"></i>
@@ -138,8 +155,10 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
             required
-          />
-          <button className="btn btn-primary" type="submit">Post</button>
+            className='inputKmt form-control'
+          /> <br/>
+          
+          <button className="btn btn-primary postComment" type="submit">Post</button>
         </form>
       </div>
     </div>
