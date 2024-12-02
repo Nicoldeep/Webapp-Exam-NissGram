@@ -6,13 +6,10 @@ import PostDates from "./PostDates";
 import PostActions from "./PostActions";
 import PostDropdown from "./PostDropdown";
 import { Post } from "../../types/interfaces";
-import "../../styles/postCard.css";
-
 
 interface PostCardProps {
   post: Post; // The post object as a single prop
   currentUserName: string; // Current logged-in user's username
-  
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post, currentUserName }) => {
@@ -44,7 +41,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, currentUserName }) => {
   };
 
   return (
-    <div className="post-card ">
+    <div className="post-card" style={{ position: "relative", marginBottom: "20px" }}>
+      <div className="d-flex justify-content-between align-items-center">
         <PostProfileHeader
           profilePicture={userProfilePicture} // Use fallback value
           userName={username} // Use fallback value
@@ -53,6 +51,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, currentUserName }) => {
         {currentUserName === simpleUser?.userName && (
           <PostDropdown onEdit={handleEdit} onDelete={handleDelete} postId={postId} />
         )}
+      </div>
       {imgUrl && (
         <img
           src={

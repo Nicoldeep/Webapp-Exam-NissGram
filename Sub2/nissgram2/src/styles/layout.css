@@ -45,7 +45,6 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   padding-top: 80px;
   border-right: 1px solid #e5e5e5;
   background-color: #f2f4f7; /* Softer color for sidebar background */
