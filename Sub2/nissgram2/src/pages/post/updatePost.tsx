@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import "../../styles/layout.css";
 import "../../styles/createPost.css";
+import config from './../../apiConfig';
+import { getPostDetails } from './../../api/operations';
 
 const UpdatePost: React.FC = () => {
   const navigate = useNavigate();
@@ -18,45 +20,39 @@ const UpdatePost: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // For valideringsfeil
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // For suksessmelding
 
-  const BASE_URL = 'http://localhost:5024';
-
   useEffect(() => {
     const fetchPostDetails = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/PostAPI/details/${postId}`, {
-          method: 'GET',
-          credentials: 'include',
-        });
+        try {
+            const response = await getPostDetails(Number(postId)); // Bruker getPostDetails fra operations
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch post data');
+            if (response.error) {
+                throw new Error(response.error); // Håndterer feil fra API-kallet
+            }
+
+            console.log('Fetched post details:', response);
+
+            const fullImageUrl = response.imgUrl?.startsWith('/images/')
+                ? `${config.BACKEND_URL}${response.imgUrl}`
+                : response.imgUrl || null;
+
+            setPostDetails({
+                text: response.text || '',
+                imageUrl: fullImageUrl || '',
+            });
+
+            setImagePreview(fullImageUrl);
+        } catch (err: any) {
+            console.error('Error fetching post details:', err.message || err);
+            setError(err.message || 'Failed to load post data.');
+        } finally {
+            setLoading(false);
         }
-
-        const data = await response.json();
-        console.log('Fetched post details:', data);
-
-        const fullImageUrl = data.imgUrl?.startsWith('/images/')
-          ? `${BASE_URL}${data.imgUrl}`
-          : data.imgUrl || null;
-
-        setPostDetails({
-          text: data.text || '',
-          imageUrl: fullImageUrl || '',
-        });
-
-        setImagePreview(fullImageUrl);
-      } catch (err: any) {
-        console.error('Error fetching post details:', err.message || err);
-        setError(err.message || 'Failed to load post data.');
-      } finally {
-        setLoading(false);
-      }
     };
 
     if (postId) {
-      fetchPostDetails();
+        fetchPostDetails();
     }
-  }, [postId]);
+}, [postId]);
 
   const handleInputChange = (value: string) => {
     setPostDetails((prevDetails) => ({
@@ -105,7 +101,7 @@ const UpdatePost: React.FC = () => {
         image: newImage || postDetails.imageUrl,
       });
   
-      const response = await fetch(`${BASE_URL}/api/PostAPI/update/${postId}`, {
+      const response = await fetch(`${config.BACKEND_URL}/api/PostAPI/update/${postId}`, {
         method: 'PUT',
         credentials: 'include',
         body: formData,
@@ -120,16 +116,14 @@ const UpdatePost: React.FC = () => {
   
       setPostDetails({
         text: updatedPost.text,
-        imageUrl: `${BASE_URL}${updatedPost.imgUrl}`,
+        imageUrl: `${config.BACKEND_URL}${updatedPost.imgUrl}`,
       });
   
-      setImagePreview(`${BASE_URL}${updatedPost.imgUrl}?t=${Date.now()}`);
+      setImagePreview(`${config.BACKEND_URL}${updatedPost.imgUrl}?t=${Date.now()}`);
       setSuccessMessage('Post updated successfully!'); // Sett suksessmelding
-  
+      
       // Naviger til hjemmesiden etter 2 sekunder
-      setTimeout(() => {
         navigate('/');
-      }, 1500);
     } catch (err: any) {
       console.error('Error updating post:', err.message || err);
       setError('Failed to update post. Please try again.');

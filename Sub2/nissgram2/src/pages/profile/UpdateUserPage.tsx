@@ -95,7 +95,7 @@ const UpdateUserPage: React.FC = () => {
       }
 
       setSuccessMessage('Profile updated successfully!');
-      setTimeout(() => navigate('/profile'), 2000);
+      navigate('/profile');
     } catch (err: any) {
       console.error('Error updating profile:', err.message || err);
       setError('Failed to update profile. Please try again.');

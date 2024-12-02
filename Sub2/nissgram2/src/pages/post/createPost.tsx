@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/layout.css";
 import "../../styles/createPost.css";
+import { createPost } from "./../../api/operations";
 
 const CreatePost: React.FC = () => {
   const navigate = useNavigate();
@@ -55,58 +56,51 @@ const CreatePost: React.FC = () => {
   };
 
   // Håndter skjema-innsending
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setSuccessMessage(null);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError(null);
+  setSuccessMessage(null);
 
-    if (!validateInputs()) return;
+  if (!validateInputs()) return;
 
-    setIsSubmitting(true);
+  setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append("Text", text.trim());
-    if (image) {
+  const formData = new FormData();
+  formData.append("Text", text.trim());
+  if (image) {
       formData.append("uploadImage", image);
-    }
+  }
 
-    try {
+  try {
       console.log("[DEBUG] Sending data to backend:", {
-        text: text.trim(),
-        image,
+          text: text.trim(),
+          image,
       });
 
-      const response = await fetch("http://localhost:5024/api/PostAPI/create", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      // Bruker createPost fra operations
+      const response = await createPost(formData);
 
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.error || "Failed to create post.");
+      if (response.error) {
+          throw new Error(response.error);
       }
 
-      const data = await response.json();
-      console.log("[DEBUG] Post created successfully:", data);
+      console.log("[DEBUG] Post created successfully:", response);
 
       // Nullstill skjema ved suksess
       setText("");
       setImage(null);
       setPreview(null);
       setSuccessMessage("Post created successfully!");
-
       // Naviger til hjemmesiden etter 2 sekunder
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } catch (err: any) {
+      
+      navigate("/");
+  } catch (err: any) {
       console.error("[ERROR] Failed to create post:", err.message || err);
       setError(err.message || "Something went wrong.");
-    } finally {
+  } finally {
       setIsSubmitting(false);
-    }
-  };
+  }
+};
 
   return (
     <div className="container mt-3">
