@@ -2,12 +2,13 @@ import React from 'react';
 import config from '../apiConfig';
 import './../styles/layout.css';
 import { useNavigate } from 'react-router-dom';
-import { logout } from './../api/operations';
-import { useState} from 'react';
+import { logout, fetchCurrentUser } from './../api/operations';
+import { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
+    const [profilepicture, setProfilePicture] = useState<string | null>(null);
 
     const handleLogout = async (event: React.MouseEvent) => {
       event.preventDefault();
@@ -21,6 +22,22 @@ const Header: React.FC = () => {
       }
     };
 
+    const fetchUserData = async () => {
+        const currentUser = await fetchCurrentUser();
+        if (currentUser.error) {
+          console.error(currentUser.error);
+        } else {
+          if(currentUser.profilePicture != null){
+            setProfilePicture(currentUser.profilePicture)
+          }
+        }
+      };
+      
+      useEffect(() => {
+        fetchUserData();
+      }, []);
+
+
   return (
     <header className="fixed-header">
         <a href="/" >
@@ -30,7 +47,14 @@ const Header: React.FC = () => {
         <nav className="icon-bar">
             <a href="/profile" className="nav-link">
                 <div className="profile-container circle">
-                    <img src={`${config.API_URL}/images/profile_image_default.png`} className="profile-picture" alt="Profile "/>
+                <img
+                        src={
+                        profilepicture
+                            ? `${config.BACKEND_URL}${profilepicture}` // Use profile picture from the backend URL
+                            : `${config.API_URL}${config.DEFAULT_IMAGE_PATH}` // Use default profile picture
+                        }
+                        alt="Profile" className="rounded-circle" style={{ width: '45px', height: '45px', padding:"5px", marginTop:"-3px" }}
+                    />
                 </div>
             </a>
             <a href="/" className="nav-link">
