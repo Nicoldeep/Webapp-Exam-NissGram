@@ -38,3 +38,56 @@
   
 }
 
+.comments-container {
+  max-height: 300px; /* Set the maximum height for the comment section */
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional: Add border to visually distinguish */
+  border-radius: 5px; /* Optional: Add some border radius for aesthetics */
+}
+
+.comments-list {
+  max-height: 400px; /* Set max height for the comments container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+}
+
+.comment-box {
+  border: 1px solid #ddd; /* Light border around each comment */
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px; /* Spacing between comments */
+  background-color: #f9f9f9; /* Light background for better readability */
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.comment-username {
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.comment-body {
+  margin-left: 50px; /* Offset the comment text to align with the username */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.comment-delete {
+  align-self: flex-end; /* Align the delete button to the right */
+}
+
+.comment-form {
+  margin-top: 20px;
+}
