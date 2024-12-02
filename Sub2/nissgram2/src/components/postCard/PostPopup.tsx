@@ -118,9 +118,9 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
             console.log(comment)
             return (
             <div key={comment.commentId} className="list-group" style={{maxHeight:"23rem", overflowY:"auto",width:"100%"}}>
-              <div className='list-group-item d-flex justify-content-between align-items-center d-flex align-items-center mb-2 kmt'>
+              <div className='comments-container list-group-item d-flex justify-content-between align-items-center d-flex align-items-center mb-2 kmt'>
                 
-                <div> </div>
+                
                 {imgUrl && (
                 <img
                   src={
@@ -133,8 +133,14 @@ const PostPopup: React.FC<PostPopupProps> = ({ post, onClose }) => {
                   style={{ width: "30px", height: "30px", marginRight: "10px" }}
                     /> 
                 )}
-                <strong>{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}:</strong> {comment.text}<br/>
-                <small className="text-muted">{formatDate(comment.dateCommented)}</small> <br/>
+
+                <div> 
+                <strong>{comment.simpleUser.userName ? comment.simpleUser.userName : "Unknown"}:</strong> </div> 
+                
+                <div> {comment.text} </div> <br/>
+
+                <div>             
+                <small className="text-muted">{formatDate(comment.dateCommented)}</small></div><br/>
                 <br/><br/>
                 {currentUser && comment.simpleUser?.userName === currentUser.username && (
                   <button onClick={() => handleDeleteComment(comment.commentId)} className="btn btn-link text-danger p-0">

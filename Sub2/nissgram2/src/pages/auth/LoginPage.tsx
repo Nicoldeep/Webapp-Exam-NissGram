@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
     <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '80vh' }}>
       <div className="row w-100" style={{ maxWidth: '800px', transform: 'translateY(-10%)' }}>
         {/* Venstre kolonne med logo */}
-        <div className="col-md-5 d-flex align-items-center" style={{ paddingRight: '20px' }}>
+        <div className="col-md-5 d-flex align-items-center" style={{ paddingRight: '20px'}}>
           <img
             src={`${config.API_URL}/images/Logo/Niss.png`}
             alt="Login Illustration"
@@ -59,6 +59,11 @@ const LoginPage: React.FC = () => {
             style={{ maxHeight: '400px' }}
           />
         </div>
+
+        <div className="col-md-1 d-flex align-items-center justify-content-center">
+            <div style={{borderLeft: "2px solid #ccc", height: "120%"}}></div>
+        </div>
+
         {/* Høyre kolonne med login-skjema */}
         <div className="col-md-6 p-4">
           <h2 className="text-center mb-4">Log in</h2>

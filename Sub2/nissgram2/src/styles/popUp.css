@@ -67,3 +67,10 @@
   
 }
 
+.comments-container {
+  max-height: 300px; /* Set the maximum height for the comment section */
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional: Add border to visually distinguish */
+  border-radius: 5px; /* Optional: Add some border radius for aesthetics */
+}
