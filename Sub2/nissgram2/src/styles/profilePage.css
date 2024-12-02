@@ -1,41 +1,4 @@
-/* Already shared CSS styles are used here
-.profile-header-frame {
-    background-color: #dee7e7;
-    border: 1px solid #ccc;
-  }
-  
-  .description-text {
-    word-break: break-word;
-    max-width: 100%;
-  }
-  
-  .username-wrapper h2 {
-    word-break: break-word;
-    max-width: 100%;
-  }
-  
-  .btn-primary {
-    background-color: #71a8a6;
-    border-color: #71a8a6;
-    color: #ffffff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #387478;
-    border-color: #387478;
-    color: #ffffff;
-  }
-  
-  .dropdown-container .btn-link {
-    background-color: #ffb703;
-    color: #ffffff;
-    border: none;
-  }
-  
-  .dropdown-container .btn-link:hover {
-    background-color: #fb8500;
-  }
-   */
+
 /*Dropdown button both for burger icon on profile page and pluss icon to upload image*/
 #dropdownMenuButton {
     background-color: #ffb703;
@@ -56,7 +19,7 @@
 
 /*background frame color*/
 .profile-header-frame {
-    background-color: #dee7e7; 
+    background-color: #FFFFFF; 
     border: 1px solid #ccc; 
 }
 
@@ -66,56 +29,3 @@
     max-width: 100%; /* Constrain to the container's width */
 }
 
-
-
-
-
-
-
-
-
-
-
-/* Match buttons to the background color
-.btn-primary {
-    background-color: #71a8a6; 
-    border-color: #71a8a6; 
-    color: #ffffff; 
-}
-
-.btn-primary:hover {
-    background-color: #387478; 
-    border-color: #387478; 
-    color: #ffffff; 
-}
- */
-/* Secondary button grey
-.btn-secondary {
-    background-color: #7e8188; 
-    border-color: #7e8188; 
-    color: #ffffff; 
-}
-
-.btn-secondary:hover {
-    background-color: rgb(94, 98, 109); 
-    border-color: rgb(94, 98, 109); 
-    color: #ffffff;
-}
- */
-
-/* Ensure text stays within the button and scales properly 
-.btn-primary, .btn-secondary {
-    display: flex; /* flexbox for inner alignment 
-    justify-content: center;
-    overflow: hidden;
-    
-}
-
-.btn-primary:hover, .btn-secondary:hover {
-    transform: scale(1.05); /* Slight scaling on hover for effect 
-}
-
-.hover-scale:hover {
-    transform: scale(1.05);  Slightly increase size 
-    transition: transform 0.2s ease;  Smooth scaling animation 
-}*/

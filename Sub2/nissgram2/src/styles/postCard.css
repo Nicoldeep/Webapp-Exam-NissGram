@@ -111,6 +111,9 @@ small {
   padding: 15px;
 }
 
+#postText{
+  padding:3% 0%;
+}
 .post-image {
   width: 100%;
   height: auto;
@@ -134,17 +137,7 @@ small {
 }
 
 
-/*.profile-post-card {
-  width: 90%; /* Larger size for profile page 
-  margin: 0 auto;
-}*/
 
-
-/*
-.comment_img_popup {
-    margin-left: 5; 
-    text-align: left; 
-}
 
 /* Responsiv styling for små skjermer */
 @media (max-width: 900px) {
@@ -171,6 +164,7 @@ small {
     }
 
     .post-card {
-      width: 100%;
+      width: 150%;
+      left: -25%;
     }
 }

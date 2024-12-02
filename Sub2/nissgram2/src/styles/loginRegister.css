@@ -1,31 +1,20 @@
-/*body {
-    background-color: #8eb8b6; 
-    color: #000000; 
-}
 
-login header
+
 .mb-4 {
     color: #ffffff;
     font-size: 60px;
 }
 
-/* Register & login button 
 .btn-primary {
     background-color:#ffb703;
     border-color: #ffb703;
-    color: #ffffff;  Hvit tekst 
+    color: #ffffff;
 }
 
 .btn-primary:hover {
-    background-color:  #fb8500; /* Mørkere blå ved hover 
-    border-color: #fb8500; /* Dypere kant ved hover 
-    color: #fffdfd; /* Lysere tekst ved hover 
-}*/
-
-
-body {
-    background-color: #8eb8b6; 
-    color: #000000; 
+    background-color:  #fb8500; 
+    border-color: #fb8500; 
+    color: #fffdfd; 
 }
 
 /*login header*/
@@ -47,3 +36,24 @@ body {
     color: #fffdfd; /* Lysere tekst ved hover */
 }
 
+
+#register{
+    width:50%;
+}
+
+#showAccountRegister a {
+    color:black;
+    font-weight:bold;
+    font-size:20px;
+}
+
+
+@media(max-width: 768px){
+    #register{
+        width: 80%;
+    }
+
+    #showAccountRegister, #showAccountRegister a{
+        font-size:16px;
+    }
+}

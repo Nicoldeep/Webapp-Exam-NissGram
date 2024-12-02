@@ -1,9 +1,9 @@
-// src/pages/HomePage.tsx
+import "./../styles/layout.css";
 import React, { useEffect, useState } from "react";
 import AllPosts from "../components/postCard/AllPosts";
 import { Post } from "../types/interfaces";
 import { getAllPosts } from "../services/postService";
-import "./../styles/layout.css";
+
 
 const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);

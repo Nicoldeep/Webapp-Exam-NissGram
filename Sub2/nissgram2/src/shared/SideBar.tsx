@@ -2,14 +2,13 @@ import React from 'react';
 import config from '../apiConfig';
 import './../styles/layout.css';
 import { useNavigate } from 'react-router-dom';
-import { fetchCurrentUser } from './../api/operations';
+import { logout, fetchCurrentUser } from './../api/operations';
 import { useEffect, useState } from 'react';
-
-import { logout } from './../api/operations';
 
 const Sidebar: React.FC = () => {
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
+    const [profilepicture, setProfilePicture] = useState<string | null>(null);
 
     const handleLogout = async (event: React.MouseEvent) => {
       event.preventDefault();
@@ -28,7 +27,9 @@ const Sidebar: React.FC = () => {
         if (currentUser.error) {
           console.error(currentUser.error);
         } else {
-          console.log('Current User:', currentUser);
+          if(currentUser.profilePicture != null){
+            setProfilePicture(currentUser.profilePicture)
+          }
         }
       };
       
@@ -44,9 +45,14 @@ const Sidebar: React.FC = () => {
             <ul className="nav flex-column text-center flex-grow-1">
                 <li className="nav-item mb-3">
                     <a href="/profile" className="nav-link">
-                        <div className="profile-container circle">
-                            <img src={`${config.API_URL}/images/profile_image_default.png`} className="profile-picture" alt="Profile "/>
-                        </div>
+                    <img
+            src={
+              profilepicture
+                ? `${config.BACKEND_URL}${profilepicture}` // Use profile picture from the backend URL
+                : `${config.API_URL}${config.DEFAULT_IMAGE_PATH}` // Use default profile picture
+            }
+            alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px' }}
+          />
                     </a>
                 </li>
                 <li className="nav-item mb-3">

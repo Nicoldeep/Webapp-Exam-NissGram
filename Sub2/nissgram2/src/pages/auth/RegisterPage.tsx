@@ -107,46 +107,46 @@ const RegisterPage: React.FC = () => {
 
 
   return (
-    <div className="container">
+    <div className="container" id="register">
       <form onSubmit={handleSubmit} id="registerForm" method="post" encType="multipart/form-data">
-        <h2 className="text-center mb-4" style={{paddingTop: "2rem"}}>Register</h2>
+        <h2 className="text-center mb-4" style={{paddingTop: "2rem", color:"#000"}}>Register</h2>
       
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="username" className="form-label fs-5 fw-bold">Username<span className="text-danger">*</span></label>
           <input type="text" className="form-control" id="username" name="username" value={userDetails.username} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="email" className="form-label fs-5 fw-bold">Email<span className="text-danger">*</span></label>
           <input type="email" className="form-control" id="email" name="email" value={userDetails.email} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="firstName" className="form-label fs-5 fw-bold">First Name</label>
           <input type="text" className="form-control" id="firstName" name="firstName" value={userDetails.firstName} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="lastName" className="form-label fs-5 fw-bold">Last Name</label>
           <input type="text" className="form-control" id="lastName" name="lastName" value={userDetails.lastName} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="about" className="form-label fs-5 fw-bold">About</label>
           <textarea className="form-control" id="about" name="about" value={userDetails.about} onChange={handleInputChange}></textarea>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="phoneNumber" className="form-label fs-5 fw-bold">Phone Number</label>
           <input type="text" className="form-control" id="phoneNumber" name="phoneNumber" value={userDetails.phoneNumber} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-1">
           <label htmlFor="password" className="form-label fs-5 fw-bold">Password<span className="text-danger">*</span></label>
           <input type="password" className="form-control" id="password" name="password" value={userDetails.password} onChange={handleInputChange} />
         </div>
 
-        <div className="mb-3" style={{paddingBottom: "2rem"}}>
+        <div className="mb-1" style={{paddingBottom: "2rem"}}>
           <label htmlFor="confirmPassword" className="form-label fs-5 fw-bold">Confirm Password<span className="text-danger">*</span></label>
           <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" value={userDetails.confirmPassword} onChange={handleInputChange} />
         </div>
@@ -156,7 +156,7 @@ const RegisterPage: React.FC = () => {
         <button type="submit" className="btn btn-primary w-100 mb-3 fs-4" >Register</button>
 
         <div className="text-center fs-5" >
-          <p>Already have an account? <a href="/login" style={{ textDecoration: 'underline' }}>Log in here</a></p>
+          <p id="showAccountRegister">Already have an account? <a href="/login" style={{ textDecoration: 'underline' }}>Log in here</a></p>
         </div>
       </form>
     </div>
